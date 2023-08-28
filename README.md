@@ -4,7 +4,7 @@
 
 ## [Demo](https://laniman.github.io/ballsort/)
 
-Puzzle game built using the [$mol framework](https://mol.hyoo.ru/)!
+Puzzle game built using the [$mol framework](https://mol.hyoo.ru/)
 
 ## Installation
 
