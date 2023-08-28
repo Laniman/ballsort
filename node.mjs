@@ -3000,16 +3000,949 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $hype_ballsort_app extends $mol_view {
-        sub() {
-            return [
-                "Hello"
-            ];
+    class $hype_ballsort_ball extends $mol_object {
+        color(next) {
+            return next ?? 0;
         }
     }
-    $.$hype_ballsort_app = $hype_ballsort_app;
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_ball.prototype, "color", null);
+    $.$hype_ballsort_ball = $hype_ballsort_ball;
 })($ || ($ = {}));
-//hype/ballsort/app/-view.tree/app.view.tree.ts
+//hype/ballsort/ball/ball.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_action = $mol_wire_method;
+})($ || ($ = {}));
+//mol/action/action.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hype_ballsort_tube extends $mol_object {
+        size() {
+            return 0;
+        }
+        complete() {
+            const [ball, ...balls] = this.balls();
+            return this.balls().length === this.size() && balls.every(obj => obj.color() === ball.color());
+        }
+        take() {
+            const next = this.balls().slice();
+            const ball = next.pop();
+            this.balls([...next]);
+            return ball;
+        }
+        put(obj) {
+            this.balls([...this.balls(), obj]);
+        }
+        balls(next) {
+            return next ?? [];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_tube.prototype, "complete", null);
+    __decorate([
+        $mol_action
+    ], $hype_ballsort_tube.prototype, "take", null);
+    __decorate([
+        $mol_action
+    ], $hype_ballsort_tube.prototype, "put", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_tube.prototype, "balls", null);
+    $.$hype_ballsort_tube = $hype_ballsort_tube;
+})($ || ($ = {}));
+//hype/ballsort/tube/tube.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_array_shuffle(array) {
+        const res = array.slice();
+        for (let index = res.length - 1; index > 0; index--) {
+            const index_swap = Math.floor(Math.random() * (index + 1));
+            const temp = res[index];
+            res[index] = res[index_swap];
+            res[index_swap] = temp;
+        }
+        return res;
+    }
+    $.$mol_array_shuffle = $mol_array_shuffle;
+})($ || ($ = {}));
+//mol/array/shuffle/shuffle.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hype_ballsort_game extends $mol_object {
+        color_count() { return 4; }
+        tube_size() { return 4; }
+        tube_empty_count() { return 2; }
+        tube_count() { return this.color_count() + this.tube_empty_count(); }
+        ball_count() { return this.tube_size() * this.color_count(); }
+        Ball(index) {
+            return new $hype_ballsort_ball;
+        }
+        balls() {
+            return Array.from({ length: this.ball_count() }, (_, index) => {
+                const obj = this.Ball(index);
+                obj.color(index % this.tube_size());
+                return obj;
+            });
+        }
+        Tube(index) {
+            const obj = new $hype_ballsort_tube;
+            obj.size = () => this.tube_size();
+            return obj;
+        }
+        tubes() {
+            const balls = $mol_array_shuffle(this.balls());
+            const size = this.tube_size();
+            return Array.from({ length: this.tube_count() }, (_, index) => {
+                const obj = this.Tube(index);
+                const list = index < this.color_count() ? balls.slice(index * size, index * size + size) : [];
+                obj.balls(list);
+                return obj;
+            });
+        }
+        moves(next) {
+            return next ?? 0;
+        }
+        tube_active(next) {
+            if (next?.balls().length === 0)
+                return null;
+            if (next?.complete())
+                return null;
+            return next ?? null;
+        }
+        ball_move(to) {
+            const from = this.tube_active();
+            if (to === from || !from) {
+                return this.tube_active(null);
+            }
+            const from_color = from?.balls().at(-1)?.color();
+            const to_color = to.balls().at(-1)?.color();
+            if (to.balls().length && from_color !== to_color) {
+                return;
+            }
+            const ball = from.take();
+            to.put(ball);
+            this.moves(this.moves() + 1);
+            this.tube_active(null);
+        }
+        tube_click(tube) {
+            const tube_active = this.tube_active();
+            tube_active === null ? this.tube_active(tube) : this.ball_move(tube);
+        }
+        finished() {
+            return this.tubes().every(tube => tube.complete() || tube.balls().length === 0);
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $hype_ballsort_game.prototype, "Ball", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_game.prototype, "balls", null);
+    __decorate([
+        $mol_mem_key
+    ], $hype_ballsort_game.prototype, "Tube", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_game.prototype, "tubes", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_game.prototype, "moves", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_game.prototype, "tube_active", null);
+    __decorate([
+        $mol_action
+    ], $hype_ballsort_game.prototype, "ball_move", null);
+    __decorate([
+        $mol_action
+    ], $hype_ballsort_game.prototype, "tube_click", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_game.prototype, "finished", null);
+    $.$hype_ballsort_game = $hype_ballsort_game;
+})($ || ($ = {}));
+//hype/ballsort/game/game.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hype_ballsort_button extends $mol_view {
+        dom_name() {
+            return "button";
+        }
+        sub() {
+            return [
+                this.title()
+            ];
+        }
+        event() {
+            return {
+                click: (next) => this.click(next)
+            };
+        }
+        title() {
+            return "";
+        }
+        click(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_button.prototype, "click", null);
+    $.$hype_ballsort_button = $hype_ballsort_button;
+})($ || ($ = {}));
+//hype/ballsort/button/-view.tree/button.view.tree.ts
+;
+"use strict";
+//mol/style/pseudo/class.ts
+;
+"use strict";
+//mol/style/pseudo/element.ts
+;
+"use strict";
+//mol/type/error/error.ts
+;
+"use strict";
+//mol/style/guard/guard.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_style_sheet(Component, config0) {
+        let rules = [];
+        const block = $mol_dom_qname($mol_ambient({}).$mol_func_name(Component));
+        const kebab = (name) => name.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
+        const make_class = (prefix, path, config) => {
+            const props = [];
+            const selector = (prefix, path) => {
+                if (path.length === 0)
+                    return prefix || `[${block}]`;
+                let res = `[${block}_${path.join('_')}]`;
+                if (prefix)
+                    res = prefix + ' :where(' + res + ')';
+                return res;
+            };
+            for (const key of Object.keys(config).reverse()) {
+                if (/^(--)?[a-z]/.test(key)) {
+                    const addProp = (keys, val) => {
+                        if (Array.isArray(val)) {
+                            if (val[0] && [Array, Object].includes(val[0].constructor)) {
+                                val = val.map(v => {
+                                    return Object.entries(v).map(([n, a]) => {
+                                        if (a === true)
+                                            return kebab(n);
+                                        if (a === false)
+                                            return null;
+                                        return String(a);
+                                    }).filter(Boolean).join(' ');
+                                }).join(',');
+                            }
+                            else {
+                                val = val.join(' ');
+                            }
+                            props.push(`\t${keys.join('-')}: ${val};\n`);
+                        }
+                        else if (val.constructor === Object) {
+                            for (let suffix in val) {
+                                addProp([...keys, kebab(suffix)], val[suffix]);
+                            }
+                        }
+                        else {
+                            props.push(`\t${keys.join('-')}: ${val};\n`);
+                        }
+                    };
+                    addProp([kebab(key)], config[key]);
+                }
+                else if (/^[A-Z]/.test(key)) {
+                    make_class(prefix, [...path, key.toLowerCase()], config[key]);
+                }
+                else if (key[0] === '$') {
+                    make_class(selector(prefix, path) + ' :where([' + $mol_dom_qname(key) + '])', [], config[key]);
+                }
+                else if (key === '>') {
+                    const types = config[key];
+                    for (let type in types) {
+                        make_class(selector(prefix, path) + ' > :where([' + $mol_dom_qname(type) + '])', [], types[type]);
+                    }
+                }
+                else if (key === '@') {
+                    const attrs = config[key];
+                    for (let name in attrs) {
+                        for (let val in attrs[name]) {
+                            make_class(selector(prefix, path) + ':where([' + name + '=' + JSON.stringify(val) + '])', [], attrs[name][val]);
+                        }
+                    }
+                }
+                else if (key === '@media') {
+                    const media = config[key];
+                    for (let query in media) {
+                        rules.push('}\n');
+                        make_class(prefix, path, media[query]);
+                        rules.push(`${key} ${query} {\n`);
+                    }
+                }
+                else {
+                    make_class(selector(prefix, path) + key, [], config[key]);
+                }
+            }
+            if (props.length) {
+                rules.push(`${selector(prefix, path)} {\n${props.reverse().join('')}}\n`);
+            }
+        };
+        make_class('', [], config0);
+        return rules.reverse().join('');
+    }
+    $.$mol_style_sheet = $mol_style_sheet;
+})($ || ($ = {}));
+//mol/style/sheet/sheet.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_style_define(Component, config) {
+        return $mol_style_attach(Component.name, $mol_style_sheet(Component, config));
+    }
+    $.$mol_style_define = $mol_style_define;
+})($ || ($ = {}));
+//mol/style/define/define.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($hype_ballsort_button, {
+            width: 'fit-content',
+            backgroundColor: 'white',
+            color: 'black',
+            padding: ['0.6rem', '1rem'],
+            fontSize: '1.3rem',
+            margin: [0, '0.2rem'],
+            border: {
+                width: '2px',
+                style: 'solid',
+                color: 'lightgray',
+            },
+            cursor: 'pointer',
+            position: 'relative',
+            ':hover': {
+                backgroundColor: '#f1f1f1',
+            },
+            ':focus': {
+                outline: 'none',
+                boxShadow: '0 0 0 4px lightblue',
+                borderColor: 'lightblue',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hype/ballsort/button/button.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hype_ballsort_link extends $mol_view {
+        dom_name() {
+            return "a";
+        }
+        attr() {
+            return {
+                href: this.href(),
+                target: this.target()
+            };
+        }
+        sub() {
+            return [
+                this.title()
+            ];
+        }
+        href() {
+            return "";
+        }
+        target() {
+            return "_self";
+        }
+        title() {
+            return "";
+        }
+    }
+    $.$hype_ballsort_link = $hype_ballsort_link;
+})($ || ($ = {}));
+//hype/ballsort/link/-view.tree/link.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($hype_ballsort_link, {
+            color: 'lightgray',
+            padding: ['0.25rem', '1rem']
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hype/ballsort/link/link.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_list extends $mol_view {
+        render_visible_only() {
+            return true;
+        }
+        render_over() {
+            return 0;
+        }
+        sub() {
+            return this.rows();
+        }
+        Empty() {
+            const obj = new this.$.$mol_view();
+            return obj;
+        }
+        Gap_before() {
+            const obj = new this.$.$mol_view();
+            obj.style = () => ({
+                paddingTop: this.gap_before()
+            });
+            return obj;
+        }
+        Gap_after() {
+            const obj = new this.$.$mol_view();
+            obj.style = () => ({
+                paddingTop: this.gap_after()
+            });
+            return obj;
+        }
+        view_window() {
+            return [
+                0,
+                0
+            ];
+        }
+        rows() {
+            return [];
+        }
+        gap_before() {
+            return 0;
+        }
+        gap_after() {
+            return 0;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_list.prototype, "Empty", null);
+    __decorate([
+        $mol_mem
+    ], $mol_list.prototype, "Gap_before", null);
+    __decorate([
+        $mol_mem
+    ], $mol_list.prototype, "Gap_after", null);
+    $.$mol_list = $mol_list;
+})($ || ($ = {}));
+//mol/list/-view.tree/list.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    let cache = null;
+    function $mol_support_css_overflow_anchor() {
+        return cache ?? (cache = (!/Gecko\//.test(navigator.userAgent)
+            && this.$mol_dom_context.CSS?.supports('overflow-anchor:auto')) ?? false);
+    }
+    $.$mol_support_css_overflow_anchor = $mol_support_css_overflow_anchor;
+})($ || ($ = {}));
+//mol/support/css/css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_dom_listener extends $mol_object {
+        _node;
+        _event;
+        _handler;
+        _config;
+        constructor(_node, _event, _handler, _config = { passive: true }) {
+            super();
+            this._node = _node;
+            this._event = _event;
+            this._handler = _handler;
+            this._config = _config;
+            this._node.addEventListener(this._event, this._handler, this._config);
+        }
+        destructor() {
+            this._node.removeEventListener(this._event, this._handler, this._config);
+            super.destructor();
+        }
+    }
+    $.$mol_dom_listener = $mol_dom_listener;
+})($ || ($ = {}));
+//mol/dom/listener/listener.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_print extends $mol_object {
+        static before() {
+            return new $mol_dom_listener(this.$.$mol_dom_context, 'beforeprint', () => {
+                this.active(true);
+            });
+        }
+        static after() {
+            return new $mol_dom_listener(this.$.$mol_dom_context, 'afterprint', () => {
+                this.active(false);
+            });
+        }
+        static active(next) {
+            this.before();
+            this.after();
+            return next || false;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_print, "before", null);
+    __decorate([
+        $mol_mem
+    ], $mol_print, "after", null);
+    __decorate([
+        $mol_mem
+    ], $mol_print, "active", null);
+    $.$mol_print = $mol_print;
+})($ || ($ = {}));
+//mol/print/print.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_mem_cached = $mol_wire_probe;
+})($ || ($ = {}));
+//mol/mem/cached/cached.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_list extends $.$mol_list {
+            sub() {
+                const rows = this.rows();
+                return (rows.length === 0) ? [this.Empty()] : rows;
+            }
+            render_visible_only() {
+                return this.$.$mol_support_css_overflow_anchor();
+            }
+            view_window(next) {
+                const kids = this.sub();
+                if (kids.length < 3)
+                    return [0, kids.length];
+                if (this.$.$mol_print.active())
+                    return [0, kids.length];
+                const rect = this.view_rect();
+                if (next)
+                    return next;
+                let [min, max] = $mol_mem_cached(() => this.view_window()) ?? [0, 0];
+                let max2 = max = Math.min(max, kids.length);
+                let min2 = min = Math.max(0, Math.min(min, max - 1));
+                const anchoring = this.render_visible_only();
+                const window_height = this.$.$mol_window.size().height + 40;
+                const over = Math.ceil(window_height * this.render_over());
+                const limit_top = -over;
+                const limit_bottom = window_height + over;
+                const gap_before = $mol_mem_cached(() => this.gap_before()) ?? 0;
+                const gap_after = $mol_mem_cached(() => this.gap_after()) ?? 0;
+                let top = Math.ceil(rect?.top ?? 0) + gap_before;
+                let bottom = Math.ceil(rect?.bottom ?? 0) - gap_after;
+                if (top <= limit_top && bottom >= limit_bottom) {
+                    return [min2, max2];
+                }
+                if (anchoring && ((bottom < limit_top) || (top > limit_bottom))) {
+                    min = 0;
+                    top = Math.ceil(rect?.top ?? 0);
+                    while (min < (kids.length - 1)) {
+                        const height = kids[min].minimal_height();
+                        if (top + height >= limit_top)
+                            break;
+                        top += height;
+                        ++min;
+                    }
+                    min2 = min;
+                    max2 = max = min;
+                    bottom = top;
+                }
+                let top2 = top;
+                let bottom2 = bottom;
+                if (anchoring && (top <= limit_top) && (bottom2 < limit_bottom)) {
+                    min2 = Math.max(0, max - 1);
+                    top2 = bottom;
+                }
+                if ((bottom >= limit_bottom) && (top2 >= limit_top)) {
+                    max2 = Math.min(min + 1, kids.length);
+                    bottom2 = top;
+                }
+                while (bottom2 < limit_bottom && max2 < kids.length) {
+                    bottom2 += kids[max2].minimal_height();
+                    ++max2;
+                }
+                while (anchoring && ((top2 >= limit_top) && (min2 > 0))) {
+                    --min2;
+                    top2 -= kids[min2].minimal_height();
+                }
+                return [min2, max2];
+            }
+            gap_before() {
+                const skipped = this.sub().slice(0, this.view_window()[0]);
+                return Math.max(0, skipped.reduce((sum, view) => sum + view.minimal_height(), 0));
+            }
+            gap_after() {
+                const skipped = this.sub().slice(this.view_window()[1]);
+                return Math.max(0, skipped.reduce((sum, view) => sum + view.minimal_height(), 0));
+            }
+            sub_visible() {
+                return [
+                    ...this.gap_before() ? [this.Gap_before()] : [],
+                    ...this.sub().slice(...this.view_window()),
+                    ...this.gap_after() ? [this.Gap_after()] : [],
+                ];
+            }
+            minimal_height() {
+                return this.sub().reduce((sum, view) => {
+                    try {
+                        return sum + view.minimal_height();
+                    }
+                    catch (error) {
+                        $mol_fail_log(error);
+                        return sum;
+                    }
+                }, 0);
+            }
+            force_render(path) {
+                const kids = this.rows();
+                const index = kids.findIndex(item => path.has(item));
+                if (index >= 0) {
+                    const win = this.view_window();
+                    if (index < win[0] || index >= win[1]) {
+                        this.view_window([this.render_visible_only() ? index : 0, index + 1]);
+                    }
+                    kids[index].force_render(path);
+                }
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "sub", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "view_window", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "gap_before", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "gap_after", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "sub_visible", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "minimal_height", null);
+        $$.$mol_list = $mol_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/list/list.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex-shrink: 0;\n\tmax-width: 100%;\n\t/* display: flex;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\tmin-height: .5rem;\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n");
+})($ || ($ = {}));
+//mol/list/-css/list.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hype_ballsort_ball_view extends $mol_view {
+        ball() {
+            const obj = new this.$.$hype_ballsort_ball();
+            return obj;
+        }
+        style() {
+            return {
+                "--main-color": this.color_main(),
+                "--light-color": this.color_light()
+            };
+        }
+        colors() {
+            return [
+                "#8F7E22",
+                "#FFE600",
+                "#247516",
+                "#70FF00",
+                "#466799",
+                "#00B2FF",
+                "#29777C",
+                "#00FFF0",
+                "#17206F",
+                "#4A72FF",
+                "#BABABA",
+                "#FFFFFF",
+                "#4C3283",
+                "#9D50FF",
+                "#8B11C5",
+                "#FF00F5",
+                "#9D0D41",
+                "#FF60B5",
+                "#4B0000",
+                "#FF0000",
+                "#79480F",
+                "#FF7A00",
+                "#343434",
+                "#B1B1B1"
+            ];
+        }
+        color_main() {
+            return "";
+        }
+        color_light() {
+            return "";
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_ball_view.prototype, "ball", null);
+    $.$hype_ballsort_ball_view = $hype_ballsort_ball_view;
+})($ || ($ = {}));
+//hype/ballsort/ball/view/-view.tree/view.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $hype_ballsort_ball_view extends $.$hype_ballsort_ball_view {
+            color_index() {
+                return this.ball().color() * 2;
+            }
+            color_main() {
+                return this.colors()[this.color_index()] ?? 'red';
+            }
+            color_light() {
+                return this.colors()[this.color_index() + 1] ?? 'white';
+            }
+        }
+        $$.$hype_ballsort_ball_view = $hype_ballsort_ball_view;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hype/ballsort/ball/view/view.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($hype_ballsort_ball_view, {
+            width: '2rem',
+            height: '2rem',
+            boxSizing: 'content-box',
+            border: {
+                radius: '50%',
+                width: '2px',
+                style: 'solid',
+                color: 'black',
+            },
+            margin: '1px',
+            position: 'relative',
+            backgroundImage: 'radial-gradient(circle at 65% 15%, white 1px, var(--light-color) 3%, var(--main-color) 60%, var(--light-color) 100%)',
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hype/ballsort/ball/view/view.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hype_ballsort_tube_view extends $mol_list {
+        tube() {
+            const obj = new this.$.$hype_ballsort_tube();
+            return obj;
+        }
+        active() {
+            return false;
+        }
+        event() {
+            return {
+                click: (next) => this.click(next)
+            };
+        }
+        rows() {
+            return [
+                this.Roof(),
+                this.Balls()
+            ];
+        }
+        click(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        roof() {
+            return null;
+        }
+        Roof() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.roof()
+            ];
+            return obj;
+        }
+        complete() {
+            return false;
+        }
+        ball(id) {
+            const obj = new this.$.$hype_ballsort_ball();
+            return obj;
+        }
+        Ball(id) {
+            const obj = new this.$.$hype_ballsort_ball_view();
+            obj.ball = () => this.ball(id);
+            return obj;
+        }
+        balls() {
+            return [
+                this.Ball("0")
+            ];
+        }
+        Balls() {
+            const obj = new this.$.$mol_list();
+            obj.style = () => ({
+                "min-height": "10rem"
+            });
+            obj.attr = () => ({
+                "data-complete": this.complete()
+            });
+            obj.rows = () => this.balls();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_tube_view.prototype, "tube", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_tube_view.prototype, "click", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_tube_view.prototype, "Roof", null);
+    __decorate([
+        $mol_mem_key
+    ], $hype_ballsort_tube_view.prototype, "ball", null);
+    __decorate([
+        $mol_mem_key
+    ], $hype_ballsort_tube_view.prototype, "Ball", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_tube_view.prototype, "Balls", null);
+    $.$hype_ballsort_tube_view = $hype_ballsort_tube_view;
+})($ || ($ = {}));
+//hype/ballsort/tube/view/-view.tree/view.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $hype_ballsort_tube_view extends $.$hype_ballsort_tube_view {
+            roof() {
+                const index = this.tube().balls().length - 1;
+                return this.active() ? this.Ball(index) : null;
+            }
+            balls() {
+                const list = this.active() ? this.tube().balls().slice(0, -1) : this.tube().balls();
+                return list.map((_, index) => this.Ball(index));
+            }
+            ball(index) {
+                return this.tube().balls()[index];
+            }
+            complete() {
+                return this.tube().complete();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hype_ballsort_tube_view.prototype, "roof", null);
+        __decorate([
+            $mol_mem
+        ], $hype_ballsort_tube_view.prototype, "balls", null);
+        $$.$hype_ballsort_tube_view = $hype_ballsort_tube_view;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hype/ballsort/tube/view/view.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($hype_ballsort_tube_view, {
+            boxSizing: 'content-box',
+            width: 'fit-content',
+            Roof: {
+                boxSizing: 'content-box',
+                height: '3rem',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: {
+                    bottom: {
+                        style: 'solid',
+                        color: 'lightgray',
+                    },
+                },
+            },
+            Balls: {
+                boxSizing: 'content-box',
+                width: '3rem',
+                flex: {
+                    direction: 'column-reverse',
+                },
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                border: {
+                    width: '2px',
+                    style: 'solid',
+                    color: 'lightgray',
+                },
+                padding: {
+                    bottom: '0.4rem',
+                    top: '0.4rem',
+                },
+                borderRadius: '0 0 2.4rem 2.4rem',
+                '@': {
+                    'data-complete': {
+                        true: {
+                            backgroundColor: 'lightgray',
+                        },
+                    },
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hype/ballsort/tube/view/view.view.css.ts
 ;
 "use strict";
 var $;
@@ -3040,6 +3973,431 @@ var $;
     $.$mol_plugin = $mol_plugin;
 })($ || ($ = {}));
 //mol/plugin/plugin.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hype_ballsort_app extends $mol_view {
+        game() {
+            const obj = new this.$.$hype_ballsort_game();
+            return obj;
+        }
+        title() {
+            return "BALL SORT";
+        }
+        Title() {
+            const obj = new this.$.$mol_view();
+            obj.dom_name = () => "h2";
+            obj.sub = () => [
+                this.Title_begin(),
+                this.Title_end()
+            ];
+            return obj;
+        }
+        sub() {
+            return [
+                this.Start_page(),
+                this.Game_page(),
+                this.Finish_page()
+            ];
+        }
+        Title_begin() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                "BALL"
+            ];
+            return obj;
+        }
+        Title_end() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                "SORT"
+            ];
+            return obj;
+        }
+        start(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Start() {
+            const obj = new this.$.$hype_ballsort_button();
+            obj.title = () => "Start game";
+            obj.click = (next) => this.start(next);
+            return obj;
+        }
+        Sources() {
+            const obj = new this.$.$hype_ballsort_link();
+            obj.title = () => "Source code";
+            obj.href = () => "https://github.com/Laniman/ballsort";
+            obj.target = () => "_blank";
+            return obj;
+        }
+        Links() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.Sources()
+            ];
+            return obj;
+        }
+        Start_page() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Title(),
+                this.Start(),
+                this.Links()
+            ];
+            return obj;
+        }
+        home(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Home() {
+            const obj = new this.$.$hype_ballsort_button();
+            obj.title = () => "←";
+            obj.click = (next) => this.home(next);
+            return obj;
+        }
+        Restart() {
+            const obj = new this.$.$hype_ballsort_button();
+            obj.title = () => "Restart";
+            obj.click = (next) => this.start(next);
+            return obj;
+        }
+        moves() {
+            return "Moves: {count}";
+        }
+        Moves() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.moves()
+            ];
+            return obj;
+        }
+        Control() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.Home(),
+                this.Restart(),
+                this.Moves()
+            ];
+            return obj;
+        }
+        tube(id) {
+            const obj = new this.$.$hype_ballsort_tube();
+            return obj;
+        }
+        tube_click(id, next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        tube_active(id) {
+            return false;
+        }
+        Tube(id) {
+            const obj = new this.$.$hype_ballsort_tube_view();
+            obj.tube = () => this.tube(id);
+            obj.click = (next) => this.tube_click(id, next);
+            obj.active = () => this.tube_active(id);
+            return obj;
+        }
+        tubes() {
+            return [
+                this.Tube("0")
+            ];
+        }
+        Tubes() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => this.tubes();
+            return obj;
+        }
+        Game_page() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Control(),
+                this.Tubes(),
+                this.Links()
+            ];
+            return obj;
+        }
+        Finish_title() {
+            const obj = new this.$.$mol_view();
+            obj.dom_name = () => "h1";
+            obj.sub = () => [
+                "You won!"
+            ];
+            return obj;
+        }
+        Finish_moves() {
+            const obj = new this.$.$mol_view();
+            obj.dom_name = () => "h2";
+            obj.sub = () => [
+                "In 16 moves"
+            ];
+            return obj;
+        }
+        Finish_home() {
+            const obj = new this.$.$hype_ballsort_button();
+            obj.title = () => "New game";
+            obj.click = (next) => this.start(next);
+            return obj;
+        }
+        Finish() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Finish_title(),
+                this.Finish_moves(),
+                this.Finish_home()
+            ];
+            return obj;
+        }
+        Finish_page() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Control(),
+                this.Tubes(),
+                this.Links(),
+                this.Finish()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "game", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Title", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Title_begin", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Title_end", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "start", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Start", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Sources", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Links", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Start_page", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "home", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Home", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Restart", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Moves", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Control", null);
+    __decorate([
+        $mol_mem_key
+    ], $hype_ballsort_app.prototype, "tube", null);
+    __decorate([
+        $mol_mem_key
+    ], $hype_ballsort_app.prototype, "tube_click", null);
+    __decorate([
+        $mol_mem_key
+    ], $hype_ballsort_app.prototype, "Tube", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Tubes", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Game_page", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Finish_title", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Finish_moves", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Finish_home", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Finish", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_app.prototype, "Finish_page", null);
+    $.$hype_ballsort_app = $hype_ballsort_app;
+})($ || ($ = {}));
+//hype/ballsort/app/-view.tree/app.view.tree.ts
+;
+var $node = $node || {} ; $node[ "/hype/ballsort/app/logo.svg" ] = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSIzMDBweCIgaGVpZ2h0PSIzMDBweCIgdmlld0JveD0iLTAuNSAtMC41IDMwMCAzMDAiPjxkZWZzLz48Zz48ZWxsaXBzZSBjeD0iMjMwIiBjeT0iOTAiIHJ4PSIyMCIgcnk9IjIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM2YzhlYmYiIHN0cm9rZS13aWR0aD0iMjAiIHBvaW50ZXItZXZlbnRzPSJhbGwiLz48cGF0aCBkPSJNIDg2IDEwMiBMIDEzNCAxMzgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZjOGViZiIgc3Ryb2tlLXdpZHRoPSIyMCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBwb2ludGVyLWV2ZW50cz0ic3Ryb2tlIi8+PHBhdGggZD0iTSA4NiA3OCBMIDEzNCA0MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmM4ZWJmIiBzdHJva2Utd2lkdGg9IjIwIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50ZXItZXZlbnRzPSJzdHJva2UiLz48ZWxsaXBzZSBjeD0iNzAiIGN5PSI5MCIgcng9IjIwIiByeT0iMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZjOGViZiIgc3Ryb2tlLXdpZHRoPSIyMCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxwYXRoIGQ9Ik0gMTY2IDQyIEwgMjE0IDc4IiBmaWxsPSJub25lIiBzdHJva2U9IiM2YzhlYmYiIHN0cm9rZS13aWR0aD0iMjAiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRlci1ldmVudHM9InN0cm9rZSIvPjxwYXRoIGQ9Ik0gMTUwIDUwIEwgMTUwIDEzMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOTY3M2E2IiBzdHJva2Utd2lkdGg9IjIwIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50ZXItZXZlbnRzPSJzdHJva2UiLz48ZWxsaXBzZSBjeD0iMTUwIiBjeT0iMzAiIHJ4PSIyMCIgcnk9IjIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM2YzhlYmYiIHN0cm9rZS13aWR0aD0iMjAiIHBvaW50ZXItZXZlbnRzPSJhbGwiLz48cGF0aCBkPSJNIDE2NiAxNjIgTCAyMTQgMTk4IiBmaWxsPSJub25lIiBzdHJva2U9IiM2YzhlYmYiIHN0cm9rZS13aWR0aD0iMjAiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRlci1ldmVudHM9InN0cm9rZSIvPjxwYXRoIGQ9Ik0gMTUwIDE3MCBMIDE1MCAyNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzk2NzNhNiIgc3Ryb2tlLXdpZHRoPSIyMCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBwb2ludGVyLWV2ZW50cz0ic3Ryb2tlIi8+PGVsbGlwc2UgY3g9IjE1MCIgY3k9IjE1MCIgcng9IjIwIiByeT0iMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZjOGViZiIgc3Ryb2tlLXdpZHRoPSIyMCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxwYXRoIGQ9Ik0gMjE0IDIyMiBMIDE2NiAyNTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZjOGViZiIgc3Ryb2tlLXdpZHRoPSIyMCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBwb2ludGVyLWV2ZW50cz0ic3Ryb2tlIi8+PGVsbGlwc2UgY3g9IjIzMCIgY3k9IjIxMCIgcng9IjIwIiByeT0iMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZjOGViZiIgc3Ryb2tlLXdpZHRoPSIyMCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxwYXRoIGQ9Ik0gMTM0IDI1OCBMIDg2IDIyMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmM4ZWJmIiBzdHJva2Utd2lkdGg9IjIwIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50ZXItZXZlbnRzPSJzdHJva2UiLz48ZWxsaXBzZSBjeD0iMTUwIiBjeT0iMjcwIiByeD0iMjAiIHJ5PSIyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmM4ZWJmIiBzdHJva2Utd2lkdGg9IjIwIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PGVsbGlwc2UgY3g9IjcwIiBjeT0iMjEwIiByeD0iMjAiIHJ5PSIyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmM4ZWJmIiBzdHJva2Utd2lkdGg9IjIwIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PGVsbGlwc2UgY3g9IjMwIiBjeT0iMTUwIiByeD0iMjAiIHJ5PSIyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJub25lIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PGVsbGlwc2UgY3g9IjI3MCIgY3k9IjE1MCIgcng9IjIwIiByeT0iMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0ibm9uZSIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjwvZz48L3N2Zz4="
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $hype_ballsort_app extends $.$hype_ballsort_app {
+            game(next) {
+                return next ?? null;
+            }
+            start() {
+                this.game(new $hype_ballsort_game);
+            }
+            home() {
+                this.game(null);
+            }
+            sub() {
+                if (!this.game())
+                    return [this.Start_page()];
+                return [this.game().finished() === false ? this.Game_page() : this.Finish_page()];
+            }
+            tubes() {
+                return this.game().tubes().map((_, index) => this.Tube(index));
+            }
+            tube(index) {
+                return this.game().Tube(index);
+            }
+            tube_click(index) {
+                this.game().tube_click(this.tube(index));
+            }
+            tube_active(index) {
+                return this.game().tube_active() === this.tube(index);
+            }
+            moves() {
+                return super.moves().replace('{count}', `${this.game().moves()}`);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hype_ballsort_app.prototype, "game", null);
+        __decorate([
+            $mol_action
+        ], $hype_ballsort_app.prototype, "start", null);
+        __decorate([
+            $mol_action
+        ], $hype_ballsort_app.prototype, "home", null);
+        __decorate([
+            $mol_mem
+        ], $hype_ballsort_app.prototype, "sub", null);
+        __decorate([
+            $mol_mem
+        ], $hype_ballsort_app.prototype, "tubes", null);
+        __decorate([
+            $mol_action
+        ], $hype_ballsort_app.prototype, "tube_click", null);
+        __decorate([
+            $mol_mem_key
+        ], $hype_ballsort_app.prototype, "tube_active", null);
+        __decorate([
+            $mol_mem
+        ], $hype_ballsort_app.prototype, "moves", null);
+        $$.$hype_ballsort_app = $hype_ballsort_app;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hype/ballsort/app/app.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($hype_ballsort_app, {
+            fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol',
+            color: '#e1e1e1',
+            lineHeight: 'normal',
+            padding: {
+                top: '1rem',
+            },
+            justify: { content: 'center' },
+            background: {
+                color: '#101526',
+            },
+            Title: {
+                font: {
+                    size: '3rem',
+                    weight: 300,
+                }
+            },
+            Title_begin: {
+                textDecoration: 'underline',
+            },
+            Links: {
+                padding: {
+                    top: '1rem',
+                },
+                justify: { content: 'center' },
+                flex: {
+                    wrap: 'wrap',
+                },
+            },
+            Start_page: {
+                align: { items: 'center' },
+            },
+            Moves: {
+                padding: ['0.6rem', '0.4rem'],
+                font: {
+                    size: '1.3rem',
+                }
+            },
+            Tubes: {
+                justify: {
+                    content: 'center',
+                }
+            },
+            Control: {
+                justify: {
+                    content: 'center',
+                }
+            },
+            Tube: {
+                margin: '1rem',
+            },
+            Finish: {
+                position: 'fixed',
+                bottom: 0,
+                top: 0,
+                left: 0,
+                right: 0,
+                background: {
+                    color: $mol_style_func.rgba(255, 255, 255, 0.6),
+                },
+                backdropFilter: $mol_style_func.blur(new $mol_style_unit(6, 'px')),
+                alignItems: 'center',
+                paddingTop: '5rem',
+            },
+            Finish_title: {
+                color: 'black',
+                textShadow: '0 0 2px white',
+            },
+            Finish_moves: {
+                color: 'black',
+                textShadow: '0 0 2px white',
+                margin: {
+                    top: '1rem',
+                },
+            },
+            Finish_home: {
+                margin: {
+                    top: '1rem',
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hype/ballsort/app/app.view.css.ts
 
 export default $
 //# sourceMappingURL=node.js.map

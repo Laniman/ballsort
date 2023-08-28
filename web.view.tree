@@ -1,2 +1,126 @@
+$hype_ballsort_button $mol_view
+	dom_name \button
+	sub / <= title \
+	event *
+		click? <=> click? null
+
+$hype_ballsort_link $mol_view
+	dom_name \a
+	attr *
+		href <= href \
+		target <= target \_self
+	sub / <= title \
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0
+	sub <= rows /$mol_view
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
+
+$hype_ballsort_ball_view $mol_view
+	ball $hype_ballsort_ball
+	style *
+		--main-color <= color_main \
+		--light-color <= color_light \
+	colors /
+		\#8F7E22
+		\#FFE600
+		\#247516
+		\#70FF00
+		\#466799
+		\#00B2FF
+		\#29777C
+		\#00FFF0
+		\#17206F
+		\#4A72FF
+		\#BABABA
+		\#FFFFFF
+		\#4C3283
+		\#9D50FF
+		\#8B11C5
+		\#FF00F5
+		\#9D0D41
+		\#FF60B5
+		\#4B0000
+		\#FF0000
+		\#79480F
+		\#FF7A00
+		\#343434
+		\#B1B1B1
+
+$hype_ballsort_tube_view $mol_list
+	tube $hype_ballsort_tube
+	active false
+	event *
+		click? <=> click? null
+	rows /
+		<= Roof $mol_view sub / <= roof null
+		<= Balls $mol_list
+			style * min-height \10rem
+			attr *
+				data-complete <= complete false
+			rows <= balls /
+				<= Ball*0 $hype_ballsort_ball_view
+					ball <= ball* $hype_ballsort_ball
+
 $hype_ballsort_app $mol_view
-	sub / \Hello
+	game $hype_ballsort_game
+	title \BALL SORT
+	Title $mol_view
+		dom_name \h2
+		sub /
+			<= Title_begin $mol_view sub / \BALL
+			<= Title_end $mol_view sub / \SORT
+	sub /
+		<= Start_page $mol_list
+			rows /
+				<= Title
+				<= Start $hype_ballsort_button
+					title \Start game
+					click? <=> start? null
+				<= Links $mol_view
+					sub /
+						<= Sources $hype_ballsort_link
+							title \Source code
+							href \https://github.com/Laniman/ballsort
+							target \_blank
+		<= Game_page $mol_list
+			rows /
+				<= Control $mol_view
+					sub /
+						<= Home $hype_ballsort_button
+							title \←
+							click? <=> home? null
+						<= Restart $hype_ballsort_button
+							title \Restart
+							click? <=> start? null
+						<= Moves $mol_view
+							sub / <= moves \Moves: {count}
+				<= Tubes $mol_view
+					sub <= tubes /
+						<= Tube*0 $hype_ballsort_tube_view
+							tube <= tube* $hype_ballsort_tube
+							click? <=> tube_click*? null
+							active <= tube_active* false
+				<= Links
+		<= Finish_page $mol_list
+			rows /
+				<= Control
+				<= Tubes
+				<= Links
+				<= Finish $mol_list
+					rows /
+						<= Finish_title $mol_view
+							dom_name \h1
+							sub / \You won!
+						<= Finish_moves $mol_view
+							dom_name \h2
+							sub / \In 16 moves
+						<= Finish_home $hype_ballsort_button
+							title \New game
+							click? <=> start?

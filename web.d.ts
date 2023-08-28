@@ -512,7 +512,7 @@ declare namespace $ {
         static scale(zoom: number): $mol_style_func<"scale", number[]>;
         static linear(...breakpoints: Array<number | [number, number | $mol_style_unit<'%'>]>): $mol_style_func<"linear", string[]>;
         static cubic_bezier(x1: number, y1: number, x2: number, y2: number): $mol_style_func<"cubic-bezier", number[]>;
-        static steps(value: number, step_position: 'jump-start' | 'jump-end' | 'jump-none' | 'jump-both' | 'start' | 'end'): $mol_style_func<"steps", (number | "jump-start" | "jump-end" | "jump-none" | "jump-both" | "start" | "end")[]>;
+        static steps(value: number, step_position: 'jump-start' | 'jump-end' | 'jump-none' | 'jump-both' | 'start' | 'end'): $mol_style_func<"steps", (number | "end" | "start" | "jump-start" | "jump-end" | "jump-none" | "jump-both")[]>;
         static blur(value?: $mol_style_unit<$mol_style_unit_length>): $mol_style_func<"blur", string | $mol_style_unit<$mol_style_unit_length>>;
         static brightness(value?: number | $mol_style_unit<'%'>): $mol_style_func<"brightness", string | number | $mol_style_unit<"%">>;
         static contrast(value?: number | $mol_style_unit<'%'>): $mol_style_func<"contrast", string | number | $mol_style_unit<"%">>;
@@ -710,8 +710,8 @@ declare namespace $ {
         state_key(suffix?: string): string;
         dom_name(): string;
         dom_name_space(): string;
-        sub(): readonly (string | number | boolean | Node | $mol_view)[];
-        sub_visible(): readonly (string | number | boolean | Node | $mol_view)[];
+        sub(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub_visible(): readonly (string | number | boolean | $mol_view | Node)[];
         minimal_width(): number;
         maximal_width(): number;
         minimal_height(): number;
@@ -772,9 +772,227 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $hype_ballsort_app extends $mol_view {
-        sub(): readonly any[];
+    class $hype_ballsort_ball extends $mol_object {
+        color(next?: number): number;
     }
+}
+
+declare namespace $ {
+    let $mol_action: typeof $mol_wire_method;
+}
+
+declare namespace $ {
+    class $hype_ballsort_tube extends $mol_object {
+        size(): number;
+        complete(): boolean;
+        take(): $hype_ballsort_ball | undefined;
+        put(obj: $hype_ballsort_ball): void;
+        balls(next?: $hype_ballsort_ball[]): $hype_ballsort_ball[];
+    }
+}
+
+declare namespace $ {
+    function $mol_array_shuffle<Item>(array: readonly Item[]): Item[];
+}
+
+declare namespace $ {
+    class $hype_ballsort_game extends $mol_object {
+        color_count(): number;
+        tube_size(): number;
+        tube_empty_count(): number;
+        tube_count(): number;
+        ball_count(): number;
+        Ball(index: number): $hype_ballsort_ball;
+        balls(): $hype_ballsort_ball[];
+        Tube(index: number): $hype_ballsort_tube;
+        tubes(): $hype_ballsort_tube[];
+        moves(next?: number): number;
+        tube_active(next?: $hype_ballsort_tube | null): $hype_ballsort_tube | null;
+        ball_move(to: $hype_ballsort_tube): $hype_ballsort_tube | null | undefined;
+        tube_click(tube: $hype_ballsort_tube): void;
+        finished(): boolean;
+    }
+}
+
+declare namespace $ {
+    class $hype_ballsort_button extends $mol_view {
+        dom_name(): string;
+        sub(): readonly any[];
+        event(): Record<string, any>;
+        title(): string;
+        click(next?: any): any;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_pseudo_class = ':active' | ':any' | ':any-link' | ':checked' | ':default' | ':defined' | ':dir(rtl)' | ':dir(ltr)' | ':disabled' | ':empty' | ':enabled' | ':first' | ':first-child' | ':first-of-type' | ':fullscreen' | ':focus' | ':focus-visible' | ':focus-within' | ':hover' | ':indeterminate' | ':in-range' | ':invalid' | ':last-child' | ':last-of-type' | ':left' | ':link' | ':not()' | ':nth-child(even)' | ':nth-child(odd)' | ':nth-last-child(even)' | ':nth-last-child(odd)' | ':nth-of-type(even)' | ':nth-of-type(odd)' | ':nth-last-of-type(even)' | ':nth-last-of-type(odd)' | ':only-child' | ':only-of-type' | ':optional' | ':out-of-range' | ':placeholder-shown' | ':read-only' | ':read-write' | ':required' | ':right' | ':root' | ':scope' | ':target' | ':valid' | ':visited';
+}
+
+declare namespace $ {
+    type $mol_style_pseudo_element = '::after' | '::before' | '::cue' | '::first-letter' | '::first-line' | '::selection' | '::slotted' | '::backdrop' | '::placeholder' | '::marker' | '::spelling-error' | '::grammar-error' | '::-webkit-calendar-picker-indicator' | '::-webkit-color-swatch' | '::-webkit-color-swatch-wrapper' | '::-webkit-details-marker' | '::-webkit-file-upload-button' | '::-webkit-image-inner-element' | '::-webkit-inner-spin-button' | '::-webkit-input-placeholder' | '::-webkit-input-speech-button' | '::-webkit-keygen-select' | '::-webkit-media-controls-panel' | '::-webkit-media-controls-timeline-container' | '::-webkit-media-slider-container' | '::-webkit-meter-bar' | '::-webkit-meter-even-less-good-value' | '::-webkit-meter-optimum-value' | '::-webkit-meter-suboptimal-value' | '::-webkit-progress-bar' | '::-webkit-progress-value' | '::-webkit-resizer' | '::-webkit-resizer:window-inactive' | '::-webkit-scrollbar' | '::-webkit-scrollbar-button' | '::-webkit-scrollbar-button:disabled' | '::-webkit-scrollbar-button:double-button:horizontal:end:decrement' | '::-webkit-scrollbar-button:double-button:horizontal:end:increment' | '::-webkit-scrollbar-button:double-button:horizontal:end:increment:corner-present' | '::-webkit-scrollbar-button:double-button:horizontal:start:decrement' | '::-webkit-scrollbar-button:double-button:horizontal:start:increment' | '::-webkit-scrollbar-button:double-button:vertical:end:decrement' | '::-webkit-scrollbar-button:double-button:vertical:end:increment' | '::-webkit-scrollbar-button:double-button:vertical:end:increment:corner-present' | '::-webkit-scrollbar-button:double-button:vertical:start:decrement' | '::-webkit-scrollbar-button:double-button:vertical:start:increment' | '::-webkit-scrollbar-button:end' | '::-webkit-scrollbar-button:end:decrement' | '::-webkit-scrollbar-button:end:increment' | '::-webkit-scrollbar-button:horizontal' | '::-webkit-scrollbar-button:horizontal:decrement' | '::-webkit-scrollbar-button:horizontal:decrement:active' | '::-webkit-scrollbar-button:horizontal:decrement:hover' | '::-webkit-scrollbar-button:horizontal:decrement:window-inactive' | '::-webkit-scrollbar-button:horizontal:end' | '::-webkit-scrollbar-button:horizontal:end:decrement' | '::-webkit-scrollbar-button:horizontal:end:increment' | '::-webkit-scrollbar-button:horizontal:end:increment:corner-present' | '::-webkit-scrollbar-button:horizontal:increment' | '::-webkit-scrollbar-button:horizontal:increment:active' | '::-webkit-scrollbar-button:horizontal:increment:hover' | '::-webkit-scrollbar-button:horizontal:increment:window-inactive' | '::-webkit-scrollbar-button:horizontal:start' | '::-webkit-scrollbar-button:horizontal:start:decrement' | '::-webkit-scrollbar-button:horizontal:start:increment' | '::-webkit-scrollbar-button:start' | '::-webkit-scrollbar-button:start:decrement' | '::-webkit-scrollbar-button:start:increment' | '::-webkit-scrollbar-button:vertical' | '::-webkit-scrollbar-button:vertical:decrement' | '::-webkit-scrollbar-button:vertical:decrement:active' | '::-webkit-scrollbar-button:vertical:decrement:hover' | '::-webkit-scrollbar-button:vertical:decrement:window-inactive' | '::-webkit-scrollbar-button:vertical:end' | '::-webkit-scrollbar-button:vertical:end:decrement' | '::-webkit-scrollbar-button:vertical:end:increment' | '::-webkit-scrollbar-button:vertical:end:increment:corner-present' | '::-webkit-scrollbar-button:vertical:increment' | '::-webkit-scrollbar-button:vertical:increment:active' | '::-webkit-scrollbar-button:vertical:increment:hover' | '::-webkit-scrollbar-button:vertical:increment:window-inactive' | '::-webkit-scrollbar-button:vertical:start' | '::-webkit-scrollbar-button:vertical:start:decrement' | '::-webkit-scrollbar-button:vertical:start:increment' | '::-webkit-scrollbar-corner' | '::-webkit-scrollbar-corner:window-inactive' | '::-webkit-scrollbar-thumb' | '::-webkit-scrollbar-thumb:horizontal' | '::-webkit-scrollbar-thumb:horizontal:active' | '::-webkit-scrollbar-thumb:horizontal:hover' | '::-webkit-scrollbar-thumb:horizontal:window-inactive' | '::-webkit-scrollbar-thumb:vertical' | '::-webkit-scrollbar-thumb:vertical:active' | '::-webkit-scrollbar-thumb:vertical:hover' | '::-webkit-scrollbar-thumb:vertical:window-inactive' | '::-webkit-scrollbar-track' | '::-webkit-scrollbar-track-piece' | '::-webkit-scrollbar-track-piece:disabled' | '::-webkit-scrollbar-track-piece:end' | '::-webkit-scrollbar-track-piece:horizontal:decrement' | '::-webkit-scrollbar-track-piece:horizontal:decrement:active' | '::-webkit-scrollbar-track-piece:horizontal:decrement:hover' | '::-webkit-scrollbar-track-piece:horizontal:end' | '::-webkit-scrollbar-track-piece:horizontal:end:corner-present' | '::-webkit-scrollbar-track-piece:horizontal:end:double-button' | '::-webkit-scrollbar-track-piece:horizontal:end:no-button' | '::-webkit-scrollbar-track-piece:horizontal:end:no-button:corner-present' | '::-webkit-scrollbar-track-piece:horizontal:end:single-button' | '::-webkit-scrollbar-track-piece:horizontal:increment' | '::-webkit-scrollbar-track-piece:horizontal:increment:active' | '::-webkit-scrollbar-track-piece:horizontal:increment:hover' | '::-webkit-scrollbar-track-piece:horizontal:start' | '::-webkit-scrollbar-track-piece:horizontal:start:double-button' | '::-webkit-scrollbar-track-piece:horizontal:start:no-button' | '::-webkit-scrollbar-track-piece:horizontal:start:single-button' | '::-webkit-scrollbar-track-piece:start' | '::-webkit-scrollbar-track-piece:vertical:decrement' | '::-webkit-scrollbar-track-piece:vertical:decrement:active' | '::-webkit-scrollbar-track-piece:vertical:decrement:hover' | '::-webkit-scrollbar-track-piece:vertical:end' | '::-webkit-scrollbar-track-piece:vertical:end:corner-present' | '::-webkit-scrollbar-track-piece:vertical:end:double-button' | '::-webkit-scrollbar-track-piece:vertical:end:no-button' | '::-webkit-scrollbar-track-piece:vertical:end:no-button:corner-present' | '::-webkit-scrollbar-track-piece:vertical:end:single-button' | '::-webkit-scrollbar-track-piece:vertical:increment' | '::-webkit-scrollbar-track-piece:vertical:increment:active' | '::-webkit-scrollbar-track-piece:vertical:increment:hover' | '::-webkit-scrollbar-track-piece:vertical:start' | '::-webkit-scrollbar-track-piece:vertical:start:double-button' | '::-webkit-scrollbar-track-piece:vertical:start:no-button' | '::-webkit-scrollbar-track-piece:vertical:start:single-button' | '::-webkit-scrollbar-track:disabled' | '::-webkit-scrollbar-track:horizontal' | '::-webkit-scrollbar-track:horizontal:disabled' | '::-webkit-scrollbar-track:horizontal:disabled:corner-present' | '::-webkit-scrollbar-track:vertical:disabled' | '::-webkit-scrollbar-track:vertical:disabled:corner-present' | '::-webkit-scrollbar:horizontal' | '::-webkit-scrollbar:horizontal:corner-present' | '::-webkit-scrollbar:horizontal:window-inactive' | '::-webkit-scrollbar:vertical' | '::-webkit-scrollbar:vertical:corner-present' | '::-webkit-scrollbar:vertical:window-inactive' | '::-webkit-search-cancel-button' | '::-webkit-search-decoration' | '::-webkit-search-results-button' | '::-webkit-search-results-decoration' | '::-webkit-slider-container' | '::-webkit-slider-runnable-track' | '::-webkit-slider-thumb' | '::-webkit-slider-thumb:disabled' | '::-webkit-slider-thumb:hover' | '::-webkit-textfield-decoration-container' | '::-webkit-validation-bubble' | '::-webkit-validation-bubble-arrow' | '::-webkit-validation-bubble-arrow-clipper' | '::-webkit-validation-bubble-heading' | '::-webkit-validation-bubble-message' | '::-webkit-validation-bubble-text-block';
+}
+
+declare namespace $ {
+    type $mol_type_error<Message, Info = {}> = Message & {
+        $mol_type_error: Info;
+    };
+}
+
+declare namespace $ {
+    type Attrs<View extends $mol_view, Config, Attrs = ReturnType<View['attr']>> = {
+        [name in keyof Attrs]?: {
+            [val in keyof Config[Extract<name, keyof Config>]]: $mol_style_guard<View, Config[Extract<name, keyof Config>][val]>;
+        };
+    };
+    type Medias<View extends $mol_view, Config> = {
+        [query in keyof Config]: $mol_style_guard<View, Config[query]>;
+    };
+    type Keys<View extends $mol_view> = '>' | '@' | keyof $mol_style_properties | $mol_style_pseudo_element | $mol_style_pseudo_class | $mol_type_keys_extract<View, () => $mol_view> | `$${string}`;
+    export type $mol_style_guard<View extends $mol_view, Config> = {
+        [key in Keys<View>]?: unknown;
+    } & {
+        [key in keyof Config]: key extends keyof $mol_style_properties ? $mol_style_properties[key] : key extends '>' | $mol_style_pseudo_class | $mol_style_pseudo_element ? $mol_style_guard<View, Config[key]> : key extends '@' ? Attrs<View, Config[key]> : key extends '@media' ? Medias<View, Config[key]> : key extends `--${string}` ? any : key extends keyof $ ? $mol_style_guard<InstanceType<Extract<$[key], typeof $mol_view>>, Config[key]> : key extends keyof View ? View[key] extends (id?: any) => infer Sub ? Sub extends $mol_view ? $mol_style_guard<Sub, Config[key]> : $mol_type_error<'Property returns non $mol_view', {
+            Returns: Sub;
+        }> : $mol_type_error<'Field is not a Property'> : key extends `$${string}` ? $mol_type_error<'Unknown View Class'> : $mol_type_error<'Unknown CSS Property'>;
+    };
+    export {};
+}
+
+declare namespace $ {
+    function $mol_style_sheet<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config0: Config): string;
+}
+
+declare namespace $ {
+    function $mol_style_define<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config: Config): HTMLStyleElement | null;
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+    class $hype_ballsort_link extends $mol_view {
+        dom_name(): string;
+        attr(): Record<string, any>;
+        sub(): readonly any[];
+        href(): string;
+        target(): string;
+        title(): string;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+    class $mol_list extends $mol_view {
+        render_visible_only(): boolean;
+        render_over(): number;
+        sub(): readonly $mol_view[];
+        Empty(): $mol_view;
+        Gap_before(): $mol_view;
+        Gap_after(): $mol_view;
+        view_window(): readonly any[];
+        rows(): readonly $mol_view[];
+        gap_before(): number;
+        gap_after(): number;
+    }
+}
+
+declare namespace $ {
+    function $mol_support_css_overflow_anchor(this: $): boolean;
+}
+
+declare namespace $ {
+    class $mol_dom_listener extends $mol_object {
+        _node: any;
+        _event: string;
+        _handler: (event: any) => any;
+        _config: boolean | {
+            passive: boolean;
+        };
+        constructor(_node: any, _event: string, _handler: (event: any) => any, _config?: boolean | {
+            passive: boolean;
+        });
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_print extends $mol_object {
+        static before(): $mol_dom_listener;
+        static after(): $mol_dom_listener;
+        static active(next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
+    let $mol_mem_cached: typeof $mol_wire_probe;
+}
+
+declare namespace $.$$ {
+    class $mol_list extends $.$mol_list {
+        sub(): readonly $mol_view[];
+        render_visible_only(): boolean;
+        view_window(next?: [number, number]): [number, number];
+        gap_before(): number;
+        gap_after(): number;
+        sub_visible(): $mol_view[];
+        minimal_height(): number;
+        force_render(path: Set<$mol_view>): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $hype_ballsort_ball_view extends $mol_view {
+        ball(): $hype_ballsort_ball;
+        style(): Record<string, any>;
+        colors(): readonly any[];
+        color_main(): string;
+        color_light(): string;
+    }
+}
+
+declare namespace $.$$ {
+    class $hype_ballsort_ball_view extends $.$hype_ballsort_ball_view {
+        color_index(): number;
+        color_main(): any;
+        color_light(): any;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+    class $hype_ballsort_tube_view extends $mol_list {
+        tube(): $hype_ballsort_tube;
+        active(): boolean;
+        event(): Record<string, any>;
+        rows(): readonly any[];
+        click(next?: any): any;
+        roof(): any;
+        Roof(): $mol_view;
+        complete(): boolean;
+        ball(id: any): $hype_ballsort_ball;
+        Ball(id: any): $$.$hype_ballsort_ball_view;
+        balls(): readonly any[];
+        Balls(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    class $hype_ballsort_tube_view extends $.$hype_ballsort_tube_view {
+        roof(): $hype_ballsort_ball_view | null;
+        balls(): $hype_ballsort_ball_view[];
+        ball(index: number): $hype_ballsort_ball;
+        complete(): boolean;
+    }
+}
+
+declare namespace $.$$ {
 }
 
 declare namespace $ {
@@ -788,6 +1006,57 @@ declare namespace $ {
         };
         render(): void;
     }
+}
+
+declare namespace $ {
+    class $hype_ballsort_app extends $mol_view {
+        game(): $hype_ballsort_game;
+        title(): string;
+        Title(): $mol_view;
+        sub(): readonly any[];
+        Title_begin(): $mol_view;
+        Title_end(): $mol_view;
+        start(next?: any): any;
+        Start(): $hype_ballsort_button;
+        Sources(): $hype_ballsort_link;
+        Links(): $mol_view;
+        Start_page(): $$.$mol_list;
+        home(next?: any): any;
+        Home(): $hype_ballsort_button;
+        Restart(): $hype_ballsort_button;
+        moves(): string;
+        Moves(): $mol_view;
+        Control(): $mol_view;
+        tube(id: any): $hype_ballsort_tube;
+        tube_click(id: any, next?: any): any;
+        tube_active(id: any): boolean;
+        Tube(id: any): $$.$hype_ballsort_tube_view;
+        tubes(): readonly any[];
+        Tubes(): $mol_view;
+        Game_page(): $$.$mol_list;
+        Finish_title(): $mol_view;
+        Finish_moves(): $mol_view;
+        Finish_home(): $hype_ballsort_button;
+        Finish(): $$.$mol_list;
+        Finish_page(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    class $hype_ballsort_app extends $.$hype_ballsort_app {
+        game(next?: $hype_ballsort_game | null): $hype_ballsort_game;
+        start(): void;
+        home(): void;
+        sub(): $mol_list[];
+        tubes(): $hype_ballsort_tube_view[];
+        tube(index: number): $hype_ballsort_tube;
+        tube_click(index: number): void;
+        tube_active(index: number): boolean;
+        moves(): string;
+    }
+}
+
+declare namespace $.$$ {
 }
 
 export = $;

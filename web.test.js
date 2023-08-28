@@ -97,9 +97,6 @@ var $;
 //mol/test/test.web.test.ts
 ;
 "use strict";
-//mol/type/error/error.ts
-;
-"use strict";
 //mol/type/assert/assert.ts
 ;
 "use strict";
@@ -2078,6 +2075,325 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            "Moves initially zero"($) {
+                const obj = new $hype_ballsort_game;
+                $mol_assert_equal(obj.moves(), 0);
+            },
+            "tube completing"($) {
+                const game = new $hype_ballsort_game;
+                const tube = game.tubes().find(obj => obj.balls().length > 0);
+                $mol_assert_not(tube.complete());
+                tube.balls().forEach(ball => ball.color(0));
+                $mol_assert_ok(tube.complete());
+            },
+            "completed tube non activation"($) {
+                const game = new $hype_ballsort_game;
+                const tube = game.tubes().find(obj => obj.balls().length > 0);
+                $mol_assert_not(game.tube_active());
+                tube.balls().map(obj => obj.color(0));
+                game.tube_click(tube);
+                $mol_assert_not(game.tube_active());
+            },
+            "empty tube not activation"($) {
+                const game = new $hype_ballsort_game;
+                const tube = game.tubes().find(obj => obj.balls().length === 0);
+                $mol_assert_not(game.tube_active());
+                game.tube_click(tube);
+                $mol_assert_not(game.tube_active());
+            },
+            'tube activation'() {
+                const game = new $hype_ballsort_game;
+                const tube_filled = game.tubes().find(obj => obj.balls().length > 0);
+                const tube_empty = game.tubes().find(obj => obj.balls().length === 0);
+                $mol_assert_not(game.tube_active());
+                game.tube_click(tube_filled);
+                $mol_assert_equal(tube_filled, game.tube_active());
+                game.tube_click(tube_empty);
+                $mol_assert_not(game.tube_active());
+                game.tube_click(tube_empty);
+                $mol_assert_equal(tube_empty, game.tube_active());
+            },
+            'ball moving'() {
+                const game = new $hype_ballsort_game;
+                const tube_filled = game.tubes().find(obj => obj.balls().length > 0);
+                const tube_empty = game.tubes().find(obj => obj.balls().length === 0);
+                const ball_moving = tube_filled.balls().at(-1);
+                game.tube_click(tube_filled);
+                game.tube_click(tube_empty);
+                $mol_assert_equal(tube_filled.balls().length, game.tube_size() - 1);
+                $mol_assert_not(tube_filled.balls().includes(ball_moving));
+                $mol_assert_equal(tube_empty.balls().length, 1);
+                $mol_assert_ok(tube_empty.balls().includes(ball_moving));
+            },
+            'moves increment'() {
+                const game = new $hype_ballsort_game;
+                const tube_filled = game.tubes().find(obj => obj.balls().length > 0);
+                const tube_empty = game.tubes().find(obj => obj.balls().length === 0);
+                game.tube_click(tube_filled);
+                game.tube_click(tube_empty);
+                $mol_assert_equal(game.moves(), 1);
+            },
+            'game finish'() {
+                const game = new $hype_ballsort_game;
+                $mol_assert_not(game.finished());
+                game.balls().forEach(ball => ball.color(0));
+                $mol_assert_ok(game.finished());
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+//hype/ballsort/game/game.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_style_sheet_test1 extends $mol_view {
+        Item() { return new $mol_view; }
+    }
+    $.$mol_style_sheet_test1 = $mol_style_sheet_test1;
+    class $mol_style_sheet_test2 extends $mol_view {
+        List() { return new $mol_style_sheet_test1; }
+    }
+    $.$mol_style_sheet_test2 = $mol_style_sheet_test2;
+    $mol_test({
+        'component block styles'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                display: 'block',
+                zIndex: 1,
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tdisplay: block;\n\tz-index: 1;\n}\n');
+        },
+        'various units'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const { px, per } = $mol_style_unit;
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                width: per(50),
+                height: px(50),
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\twidth: 50%;\n\theight: 50px;\n}\n');
+        },
+        'various functions'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const { calc } = $mol_style_func;
+            const { px, per } = $mol_style_unit;
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                width: calc(`${per(100)} - ${px(1)}`),
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\twidth: calc(100% - 1px);\n}\n');
+        },
+        'property groups'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const { px } = $mol_style_unit;
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                flex: {
+                    grow: 5
+                }
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tflex-grow: 5;\n}\n');
+        },
+        'custom properties'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                '--isVariable': 'yes',
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\t--is-variable: yes;\n}\n');
+        },
+        'custom property groups'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const { px } = $mol_style_unit;
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                '--variable': {
+                    test: px(5)
+                }
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\t--variable-test: 5px;\n}\n');
+        },
+        'property shorthand'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const { px } = $mol_style_unit;
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                padding: [px(5), 'auto']
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tpadding: 5px auto;\n}\n');
+        },
+        'sequenced values'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const { url } = $mol_style_func;
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                background: {
+                    image: [[url('foo')], [url('bar')]],
+                },
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tbackground-image: url("foo"),url("bar");\n}\n');
+        },
+        'sequenced structs'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const { rem } = $mol_style_unit;
+            const { hsla } = $mol_style_func;
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                box: {
+                    shadow: [
+                        {
+                            inset: true,
+                            x: 0,
+                            y: 0,
+                            blur: rem(.5),
+                            spread: 0,
+                            color: 'red',
+                        },
+                        {
+                            inset: false,
+                            x: 0,
+                            y: 0,
+                            blur: rem(.5),
+                            spread: 0,
+                            color: 'blue',
+                        },
+                    ],
+                },
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tbox-shadow: inset 0 0 0.5rem 0 red,0 0 0.5rem 0 blue;\n}\n');
+        },
+        'component block styles with pseudo class'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                ':focus': {
+                    color: 'red',
+                    display: 'block',
+                },
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test]:focus {\n\tcolor: red;\n\tdisplay: block;\n}\n');
+        },
+        'component block styles with pseudo element'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                '::first-line': {
+                    color: 'red',
+                    display: 'block',
+                },
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test]::first-line {\n\tcolor: red;\n\tdisplay: block;\n}\n');
+        },
+        'component block styles with media query'() {
+            class $mol_style_sheet_test extends $mol_view {
+            }
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                '@media': {
+                    'print': {
+                        color: 'red',
+                        display: 'block',
+                    },
+                },
+            });
+            $mol_assert_equal(sheet, '@media print {\n[mol_style_sheet_test] {\n\tcolor: red;\n\tdisplay: block;\n}\n}\n');
+        },
+        'component block styles with attribute value'() {
+            class $mol_style_sheet_test extends $mol_view {
+                attr() {
+                    return {
+                        mol_theme: '$mol_theme_dark'
+                    };
+                }
+            }
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                '@': {
+                    mol_theme: {
+                        '$mol_theme_dark': {
+                            color: 'red',
+                            display: 'block',
+                        },
+                    },
+                },
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test]:where([mol_theme="$mol_theme_dark"]) {\n\tcolor: red;\n\tdisplay: block;\n}\n');
+        },
+        'component element styles'() {
+            class $mol_style_sheet_test extends $mol_view {
+                Item() { return new $mol_view; }
+            }
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                Item: {
+                    color: 'red',
+                    display: 'block',
+                },
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test_item] {\n\tcolor: red;\n\tdisplay: block;\n}\n');
+        },
+        'component element of element styles'() {
+            const sheet = $mol_style_sheet($mol_style_sheet_test2, {
+                List: {
+                    Item: {
+                        color: 'red',
+                        display: 'block',
+                    },
+                },
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test2_list_item] {\n\tcolor: red;\n\tdisplay: block;\n}\n');
+        },
+        'component element styles with block attribute value'() {
+            class $mol_style_sheet_test extends $mol_view {
+                Item() { return new $mol_view; }
+                attr() {
+                    return {
+                        mol_theme: '$mol_theme_dark'
+                    };
+                }
+            }
+            const sheet = $mol_style_sheet($mol_style_sheet_test, {
+                '@': {
+                    mol_theme: {
+                        '$mol_theme_dark': {
+                            Item: {
+                                color: 'red',
+                            },
+                        },
+                    },
+                },
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test]:where([mol_theme="$mol_theme_dark"]) :where([mol_style_sheet_test_item]) {\n\tcolor: red;\n}\n');
+        },
+        'inner component styles by class'() {
+            const sheet = $mol_style_sheet($mol_style_sheet_test2, {
+                $mol_style_sheet_test1: {
+                    color: 'red',
+                    display: 'block',
+                },
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test2] :where([mol_style_sheet_test1]) {\n\tcolor: red;\n\tdisplay: block;\n}\n');
+        },
+        'child component styles by class'() {
+            const sheet = $mol_style_sheet($mol_style_sheet_test2, {
+                '>': {
+                    $mol_style_sheet_test1: {
+                        color: 'red',
+                        display: 'block',
+                    },
+                },
+            });
+            $mol_assert_equal(sheet, '[mol_style_sheet_test2] > :where([mol_style_sheet_test1]) {\n\tcolor: red;\n\tdisplay: block;\n}\n');
+        },
+    });
+})($ || ($ = {}));
+//mol/style/sheet/sheet.test.ts
+;
+"use strict";
+var $;
 (function ($) {
     class $mol_view_tree_test_simple extends $mol_view {
         some() {
@@ -2949,13 +3265,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_action = $mol_wire_method;
-})($ || ($ = {}));
-//mol/action/action.ts
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_dom_parse(text, type = 'application/xhtml+xml') {
         const parser = new $mol_dom_context.DOMParser();
         const doc = parser.parseFromString(text, type);
@@ -3678,5 +3987,24 @@ var $;
     $.$mol_view_tree_compile = $mol_view_tree_compile;
 })($ || ($ = {}));
 //mol/view/tree/tree.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            "Screen changing"($) {
+                const app = new $hype_ballsort_app;
+                $mol_assert_like(app.sub(), [app.Start_page()]);
+                app.start();
+                $mol_assert_like(app.sub(), [app.Game_page()]);
+                app.game().balls().forEach(obj => obj.color(0));
+                $mol_assert_like(app.sub(), [app.Finish_page()]);
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+//hype/ballsort/app/app.view.test.ts
 
 //# sourceMappingURL=web.test.js.map
