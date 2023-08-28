@@ -30,7 +30,7 @@ $hype_ballsort_app $mol_view
 							title \Restart
 							click? <=> start? null
 						<= Moves $mol_view
-							sub / <= moves \:Moves {count}
+							sub / <= moves \Moves: {count}
 				<= Tubes $mol_view
 					sub <= tubes /
 						<= Tube*0 $hype_ballsort_tube_view
