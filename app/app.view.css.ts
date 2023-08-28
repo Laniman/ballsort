@@ -1,5 +1,5 @@
 namespace $.$$ {
-
+	
 	$mol_style_define( $hype_ballsort_app, {
 		fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol',
 		color: '#e1e1e1',
@@ -72,7 +72,7 @@ namespace $.$$ {
 			background: {
 				color: $mol_style_func.rgba(255, 255, 255, 0.6),
 			},
-			backdropFilter: $mol_style_func.blur('6px'),
+			backdropFilter: $mol_style_func.blur(new $mol_style_unit(6, 'px')),
 			alignItems: 'center',
 			paddingTop: '5rem',
 		},
