@@ -1,2 +1,56 @@
 $hype_ballsort_app $mol_view
-	sub / \Hello
+	game $hype_ballsort_game
+	title \BALL SORT
+	Title $mol_view
+		dom_name \h2
+		sub /
+			<= Title_begin $mol_view sub / \BALL
+			<= Title_end $mol_view sub / \SORT
+	sub /
+		<= Start_page $mol_list
+			rows /
+				<= Title
+				<= Start $hype_ballsort_button
+					title \Start game
+					click? <=> start? null
+				<= Links $mol_view
+					sub /
+						<= Sources $hype_ballsort_link
+							title \Source code
+							href \https://github.com/Laniman/ballsort
+							target \_blank
+		<= Game_page $mol_list
+			rows /
+				<= Control $mol_view
+					sub /
+						<= Home $hype_ballsort_button
+							title \←
+							click? <=> home? null
+						<= Restart $hype_ballsort_button
+							title \Restart
+							click? <=> start? null
+						<= Moves $mol_view
+							sub / <= moves \:Moves {count}
+				<= Tubes $mol_view
+					sub <= tubes /
+						<= Tube*0 $hype_ballsort_tube_view
+							tube <= tube* $hype_ballsort_tube
+							click? <=> tube_click*? null
+							active <= tube_active* false
+				<= Links
+		<= Finish_page $mol_list
+			rows /
+				<= Control
+				<= Tubes
+				<= Links
+				<= Finish $mol_list
+					rows /
+						<= Finish_title $mol_view
+							dom_name \h1
+							sub / \You won!
+						<= Finish_moves $mol_view
+							dom_name \h2
+							sub / \In 16 moves
+						<= Finish_home $hype_ballsort_button
+							title \New game
+							click? <=> start?

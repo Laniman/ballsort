@@ -15,7 +15,7 @@ namespace $ {
 		take() {
 			const next = this.balls().slice()
 			const ball = next.pop()
-			this.balls( next )
+			this.balls( [ ...next ] )
 			return ball
 		}
 

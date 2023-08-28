@@ -1,0 +1,14 @@
+$hype_ballsort_tube_view $mol_list
+	tube $hype_ballsort_tube
+	active false
+	event *
+		click? <=> click? null
+	rows /
+		<= Roof $mol_view sub / <= roof null
+		<= Balls $mol_list
+			style * min-height \10rem
+			attr *
+				data-complete <= complete false
+			rows <= balls /
+				<= Ball*0 $hype_ballsort_ball_view
+					ball <= ball* $hype_ballsort_ball

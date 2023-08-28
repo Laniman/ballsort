@@ -1,0 +1,5 @@
+$hype_ballsort_button $mol_view
+	dom_name \button
+	sub / <= title \
+	event *
+		click? <=> click? null

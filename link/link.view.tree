@@ -1,0 +1,6 @@
+$hype_ballsort_link $mol_view
+	dom_name \a
+	attr *
+		href <= href \
+		target <= target \_self
+	sub / <= title \

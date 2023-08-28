@@ -1,0 +1,30 @@
+$hype_ballsort_ball_view $mol_view
+	ball $hype_ballsort_ball
+	style *
+		--main-color <= color_main \
+		--light-color <= color_light \
+	colors /
+		\#8F7E22
+		\#FFE600
+		\#247516
+		\#70FF00
+		\#466799
+		\#00B2FF
+		\#29777C
+		\#00FFF0
+		\#17206F
+		\#4A72FF
+		\#BABABA
+		\#FFFFFF
+		\#4C3283
+		\#9D50FF
+		\#8B11C5
+		\#FF00F5
+		\#9D0D41
+		\#FF60B5
+		\#4B0000
+		\#FF0000
+		\#79480F
+		\#FF7A00
+		\#343434
+		\#B1B1B1
