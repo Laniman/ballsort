@@ -1,0 +1,4 @@
+deploy \/mol/logo/logo.svg
+deploy \/hype/ballsort/manifest.json
+
+include \/mol/offline/install
