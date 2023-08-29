@@ -12,3 +12,7 @@
 	pack icon git \https://github.com/nin-jin/mol_icon.git
 \/mol/view
 	include \/mol/view/tree/test
+\/hype/ballsort/app
+	deploy \/mol/logo/logo.svg
+	deploy \/hype/ballsort/manifest.json
+	include \/mol/offline/install

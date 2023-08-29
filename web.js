@@ -4240,8 +4240,72 @@ var $;
 })($ || ($ = {}));
 //hype/ballsort/app/-view.tree/app.view.tree.ts
 ;
-var $node = $node || {} ; $node[ "/hype/ballsort/app/logo.svg" ] = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSIzMDBweCIgaGVpZ2h0PSIzMDBweCIgdmlld0JveD0iLTAuNSAtMC41IDMwMCAzMDAiPjxkZWZzLz48Zz48ZWxsaXBzZSBjeD0iMjMwIiBjeT0iOTAiIHJ4PSIyMCIgcnk9IjIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM2YzhlYmYiIHN0cm9rZS13aWR0aD0iMjAiIHBvaW50ZXItZXZlbnRzPSJhbGwiLz48cGF0aCBkPSJNIDg2IDEwMiBMIDEzNCAxMzgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZjOGViZiIgc3Ryb2tlLXdpZHRoPSIyMCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBwb2ludGVyLWV2ZW50cz0ic3Ryb2tlIi8+PHBhdGggZD0iTSA4NiA3OCBMIDEzNCA0MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmM4ZWJmIiBzdHJva2Utd2lkdGg9IjIwIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50ZXItZXZlbnRzPSJzdHJva2UiLz48ZWxsaXBzZSBjeD0iNzAiIGN5PSI5MCIgcng9IjIwIiByeT0iMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZjOGViZiIgc3Ryb2tlLXdpZHRoPSIyMCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxwYXRoIGQ9Ik0gMTY2IDQyIEwgMjE0IDc4IiBmaWxsPSJub25lIiBzdHJva2U9IiM2YzhlYmYiIHN0cm9rZS13aWR0aD0iMjAiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRlci1ldmVudHM9InN0cm9rZSIvPjxwYXRoIGQ9Ik0gMTUwIDUwIEwgMTUwIDEzMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOTY3M2E2IiBzdHJva2Utd2lkdGg9IjIwIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50ZXItZXZlbnRzPSJzdHJva2UiLz48ZWxsaXBzZSBjeD0iMTUwIiBjeT0iMzAiIHJ4PSIyMCIgcnk9IjIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM2YzhlYmYiIHN0cm9rZS13aWR0aD0iMjAiIHBvaW50ZXItZXZlbnRzPSJhbGwiLz48cGF0aCBkPSJNIDE2NiAxNjIgTCAyMTQgMTk4IiBmaWxsPSJub25lIiBzdHJva2U9IiM2YzhlYmYiIHN0cm9rZS13aWR0aD0iMjAiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgcG9pbnRlci1ldmVudHM9InN0cm9rZSIvPjxwYXRoIGQ9Ik0gMTUwIDE3MCBMIDE1MCAyNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzk2NzNhNiIgc3Ryb2tlLXdpZHRoPSIyMCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBwb2ludGVyLWV2ZW50cz0ic3Ryb2tlIi8+PGVsbGlwc2UgY3g9IjE1MCIgY3k9IjE1MCIgcng9IjIwIiByeT0iMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZjOGViZiIgc3Ryb2tlLXdpZHRoPSIyMCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxwYXRoIGQ9Ik0gMjE0IDIyMiBMIDE2NiAyNTgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZjOGViZiIgc3Ryb2tlLXdpZHRoPSIyMCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBwb2ludGVyLWV2ZW50cz0ic3Ryb2tlIi8+PGVsbGlwc2UgY3g9IjIzMCIgY3k9IjIxMCIgcng9IjIwIiByeT0iMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZjOGViZiIgc3Ryb2tlLXdpZHRoPSIyMCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxwYXRoIGQ9Ik0gMTM0IDI1OCBMIDg2IDIyMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmM4ZWJmIiBzdHJva2Utd2lkdGg9IjIwIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHBvaW50ZXItZXZlbnRzPSJzdHJva2UiLz48ZWxsaXBzZSBjeD0iMTUwIiBjeT0iMjcwIiByeD0iMjAiIHJ5PSIyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmM4ZWJmIiBzdHJva2Utd2lkdGg9IjIwIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PGVsbGlwc2UgY3g9IjcwIiBjeT0iMjEwIiByeD0iMjAiIHJ5PSIyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNmM4ZWJmIiBzdHJva2Utd2lkdGg9IjIwIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PGVsbGlwc2UgY3g9IjMwIiBjeT0iMTUwIiByeD0iMjAiIHJ5PSIyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJub25lIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PGVsbGlwc2UgY3g9IjI3MCIgY3k9IjE1MCIgcng9IjIwIiByeT0iMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0ibm9uZSIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjwvZz48L3N2Zz4K"
-
+"use strict";
+var $;
+(function ($) {
+    const blacklist = new Set([
+        '//cse.google.com/adsense/search/async-ads.js'
+    ]);
+    function $mol_offline() {
+        if (typeof window === 'undefined') {
+            self.addEventListener('install', (event) => {
+                ;
+                self.skipWaiting();
+            });
+            self.addEventListener('activate', (event) => {
+                caches.delete('v1');
+                caches.delete('$mol_offline');
+                self.clients.claim();
+                console.info('$mol_offline activated');
+            });
+            self.addEventListener('fetch', (event) => {
+                const request = event.request;
+                if (blacklist.has(request.url.replace(/^https?:/, ''))) {
+                    return event.respondWith(new Response(null, {
+                        status: 418,
+                        statusText: 'Blocked'
+                    }));
+                }
+                if (request.method !== 'GET' || !/^https?:/.test(request.url)) {
+                    return event.respondWith(fetch(request));
+                }
+                const fresh = fetch(event.request).then(response => {
+                    event.waitUntil(caches.open('$mol_offline').then(cache => cache.put(event.request, response)));
+                    return response.clone();
+                });
+                event.waitUntil(fresh);
+                event.respondWith(caches.match(event.request).then(response => response || fresh));
+            });
+            self.addEventListener('beforeinstallprompt', (event) => {
+                console.log(event);
+                event.prompt();
+            });
+        }
+        else if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+            console.warn('HTTPS or localhost is required for service workers.');
+        }
+        else if (!navigator.serviceWorker) {
+            console.warn('Service Worker is not supported.');
+        }
+        else {
+            navigator.serviceWorker.register('web.js');
+        }
+    }
+    $.$mol_offline = $mol_offline;
+})($ || ($ = {}));
+//mol/offline/offline.web.ts
+;
+"use strict";
+var $;
+(function ($) {
+    try {
+        $mol_offline();
+    }
+    catch (error) {
+        console.error(error);
+    }
+})($ || ($ = {}));
+//mol/offline/install/install.ts
 ;
 "use strict";
 var $;

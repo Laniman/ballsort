@@ -134,7 +134,9 @@
     "$mol_dom_listener",
     "$mol_mem_cached",
     "$hype_ballsort_tube_view",
-    "$hype_ballsort_ball_view"
+    "$hype_ballsort_ball_view",
+    "$mol_offline_install",
+    "$mol_offline"
   ],
   "dependencies": {
     "jsdom": "*"

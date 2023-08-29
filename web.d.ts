@@ -1245,6 +1245,13 @@ declare namespace $ {
     }
 }
 
+declare namespace $ {
+    function $mol_offline(): void;
+}
+
+declare namespace $ {
+}
+
 declare namespace $.$$ {
     class $hype_ballsort_app extends $.$hype_ballsort_app {
         game(next?: $hype_ballsort_game | null): $hype_ballsort_game;
