@@ -1,15 +1,49 @@
-$hype_ballsort_button $mol_view
-	dom_name \button
-	sub / <= title \
-	event *
-		click? <=> click? null
+$mol_speck $mol_view
+	attr *
+		^
+		mol_theme <= theme \$mol_theme_accent
+	style *
+		^
+		minHeight \1em
+	sub /
+		<= value null
 
-$hype_ballsort_link $mol_view
+$mol_button $mol_view
+	enabled true
+	click?event null
+	event_click?event null
+	event *
+		^
+		click?event <=> event_activate?event null
+		dblclick?event <=> clicks?event null
+		keydown?event <=> event_key_press?event null 
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint_safe <= hint \
+	sub /$mol_view_content
+		<= title
+	Speck $mol_speck
+		value <= error \
+
+$mol_link $mol_view
+	uri \
 	dom_name \a
 	attr *
-		href <= href \
+		^
+		href <= uri_toggle \
+		title <= hint_safe <= hint \
 		target <= target \_self
-	sub / <= title \
+		download <= file_name \
+		mol_link_current <= current false
+	sub /$mol_view_content
+		<= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null
 
 $mol_list $mol_view
 	render_visible_only true
@@ -80,23 +114,23 @@ $hype_ballsort_app $mol_view
 		<= Start_page $mol_list
 			rows /
 				<= Title
-				<= Start $hype_ballsort_button
+				<= Start $mol_button
 					title \Start game
 					click? <=> start? null
 				<= Links $mol_view
 					sub /
-						<= Sources $hype_ballsort_link
+						<= Sources $mol_link
 							title \Source code
-							href \https://github.com/Laniman/ballsort
+							uri \https://github.com/Laniman/ballsort
 							target \_blank
 		<= Game_page $mol_list
 			rows /
 				<= Control $mol_view
 					sub /
-						<= Home $hype_ballsort_button
+						<= Home $mol_button
 							title \←
 							click? <=> home? null
-						<= Restart $hype_ballsort_button
+						<= Restart $mol_button
 							title \Restart
 							click? <=> start? null
 						<= Moves $mol_view
@@ -121,6 +155,6 @@ $hype_ballsort_app $mol_view
 						<= Finish_moves $mol_view
 							dom_name \h2
 							sub / \In 16 moves
-						<= Finish_home $hype_ballsort_button
+						<= Finish_home $mol_button
 							title \New game
 							click? <=> start?
