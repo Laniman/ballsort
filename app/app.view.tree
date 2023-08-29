@@ -10,23 +10,23 @@ $hype_ballsort_app $mol_view
 		<= Start_page $mol_list
 			rows /
 				<= Title
-				<= Start $hype_ballsort_button
+				<= Start $mol_button
 					title \Start game
 					click? <=> start? null
 				<= Links $mol_view
 					sub /
-						<= Sources $hype_ballsort_link
+						<= Sources $mol_link
 							title \Source code
-							href \https://github.com/Laniman/ballsort
+							uri \https://github.com/Laniman/ballsort
 							target \_blank
 		<= Game_page $mol_list
 			rows /
 				<= Control $mol_view
 					sub /
-						<= Home $hype_ballsort_button
+						<= Home $mol_button
 							title \←
 							click? <=> home? null
-						<= Restart $hype_ballsort_button
+						<= Restart $mol_button
 							title \Restart
 							click? <=> start? null
 						<= Moves $mol_view
@@ -51,6 +51,6 @@ $hype_ballsort_app $mol_view
 						<= Finish_moves $mol_view
 							dom_name \h2
 							sub / \In 16 moves
-						<= Finish_home $hype_ballsort_button
+						<= Finish_home $mol_button
 							title \New game
 							click? <=> start?
