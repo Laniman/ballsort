@@ -932,49 +932,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $hype_ballsort_ball extends $mol_object {
-        color(next?: number): number;
-    }
-}
-
-declare namespace $ {
-    let $mol_action: typeof $mol_wire_method;
-}
-
-declare namespace $ {
-    class $hype_ballsort_tube extends $mol_object {
-        size(): number;
-        complete(): boolean;
-        take(): $hype_ballsort_ball | undefined;
-        put(obj: $hype_ballsort_ball): void;
-        balls(next?: $hype_ballsort_ball[]): $hype_ballsort_ball[];
-    }
-}
-
-declare namespace $ {
-    function $mol_array_shuffle<Item>(array: readonly Item[]): Item[];
-}
-
-declare namespace $ {
-    class $hype_ballsort_game extends $mol_object {
-        color_count(): number;
-        tube_size(): number;
-        tube_empty_count(): number;
-        tube_count(): number;
-        ball_count(): number;
-        Ball(index: number): $hype_ballsort_ball;
-        balls(): $hype_ballsort_ball[];
-        Tube(index: number): $hype_ballsort_tube;
-        tubes(): $hype_ballsort_tube[];
-        moves(next?: number): number;
-        tube_active(next?: $hype_ballsort_tube | null): $hype_ballsort_tube | null;
-        ball_move(to: $hype_ballsort_tube): $hype_ballsort_tube | null | undefined;
-        tube_click(tube: $hype_ballsort_tube): void;
-        finished(): boolean;
-    }
-}
-
-declare namespace $ {
     let $mol_layer: $mol_style_prop_result;
 }
 
@@ -987,6 +944,8 @@ declare namespace $ {
 declare namespace $ {
 
 	export class $mol_speck extends $mol_view {
+		theme( ): string
+		value( ): any
 		attr( ): ({ 
 			'mol_theme': ReturnType< $mol_speck['theme'] >,
 		})  & ReturnType< $mol_view['attr'] >
@@ -994,8 +953,6 @@ declare namespace $ {
 			'minHeight': string,
 		})  & ReturnType< $mol_view['style'] >
 		sub( ): readonly(any)[]
-		theme( ): string
-		value( ): any
 	}
 	
 }
@@ -1112,12 +1069,20 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_speck__value__RBB817P1 = $mol_type_enforce<
+	type $mol_speck__value__APSPM37N = $mol_type_enforce<
 		ReturnType< $mol_button['error'] >
 		,
 		ReturnType< $mol_speck['value'] >
 	>
 	export class $mol_button extends $mol_view {
+		event_activate( next?: any ): any
+		clicks( next?: any ): any
+		event_key_press( next?: any ): any
+		disabled( ): boolean
+		tab_index( ): number
+		hint( ): string
+		hint_safe( ): ReturnType< $mol_button['hint'] >
+		error( ): string
 		enabled( ): boolean
 		click( next?: any ): any
 		event_click( next?: any ): any
@@ -1134,14 +1099,6 @@ declare namespace $ {
 		})  & ReturnType< $mol_view['attr'] >
 		sub( ): readonly($mol_view_content)[]
 		Speck( ): $mol_speck
-		event_activate( next?: any ): any
-		clicks( next?: any ): any
-		event_key_press( next?: any ): any
-		disabled( ): boolean
-		tab_index( ): number
-		hint( ): string
-		hint_safe( ): ReturnType< $mol_button['hint'] >
-		error( ): string
 	}
 	
 }
@@ -1161,6 +1118,10 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+    let $mol_action: typeof $mol_wire_method;
 }
 
 declare namespace $ {
@@ -1235,6 +1196,15 @@ declare namespace $ {
 declare namespace $ {
 
 	export class $mol_link extends $mol_view {
+		uri_toggle( ): string
+		hint( ): string
+		hint_safe( ): ReturnType< $mol_link['hint'] >
+		target( ): string
+		file_name( ): string
+		current( ): boolean
+		relation( ): string
+		event_click( next?: any ): any
+		click( next?: ReturnType< $mol_link['event_click'] > ): ReturnType< $mol_link['event_click'] >
 		uri( ): string
 		dom_name( ): string
 		uri_off( ): string
@@ -1253,15 +1223,6 @@ declare namespace $ {
 		event( ): ({ 
 			click( next?: ReturnType< $mol_link['click'] > ): ReturnType< $mol_link['click'] >,
 		})  & ReturnType< $mol_view['event'] >
-		uri_toggle( ): string
-		hint( ): string
-		hint_safe( ): ReturnType< $mol_link['hint'] >
-		target( ): string
-		file_name( ): string
-		current( ): boolean
-		relation( ): string
-		event_click( next?: any ): any
-		click( next?: ReturnType< $mol_link['event_click'] > ): ReturnType< $mol_link['event_click'] >
 	}
 	
 }
@@ -1318,14 +1279,14 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__style__24N7XXWA = $mol_type_enforce<
+	type $mol_view__style__OTM7YMS0 = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_before'] >,
 		}) 
 		,
 		ReturnType< $mol_view['style'] >
 	>
-	type $mol_view__style__ZP4Y5REF = $mol_type_enforce<
+	type $mol_view__style__QSAQSLTA = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_after'] >,
 		}) 
@@ -1333,6 +1294,9 @@ declare namespace $ {
 		ReturnType< $mol_view['style'] >
 	>
 	export class $mol_list extends $mol_view {
+		rows( ): readonly($mol_view)[]
+		gap_before( ): number
+		gap_after( ): number
 		render_visible_only( ): boolean
 		render_over( ): number
 		sub( ): ReturnType< $mol_list['rows'] >
@@ -1340,9 +1304,6 @@ declare namespace $ {
 		Gap_before( ): $mol_view
 		Gap_after( ): $mol_view
 		view_window( ): readonly(any)[]
-		rows( ): readonly($mol_view)[]
-		gap_before( ): number
-		gap_after( ): number
 	}
 	
 }
@@ -1365,16 +1326,32 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $hype_ballsort_ball extends $mol_object {
+        color(next?: number): number;
+    }
+}
+
+declare namespace $ {
+    class $hype_ballsort_tube extends $mol_object {
+        size(): number;
+        complete(): boolean;
+        take(): $hype_ballsort_ball | undefined;
+        put(obj: $hype_ballsort_ball): void;
+        balls(next?: $hype_ballsort_ball[]): $hype_ballsort_ball[];
+    }
+}
+
+declare namespace $ {
 
 	export class $hype_ballsort_ball_view extends $mol_view {
+		color_main( ): string
+		color_light( ): string
 		ball( ): $hype_ballsort_ball
 		style( ): ({ 
 			'--main-color': ReturnType< $hype_ballsort_ball_view['color_main'] >,
 			'--light-color': ReturnType< $hype_ballsort_ball_view['color_light'] >,
 		}) 
 		colors( ): readonly(any)[]
-		color_main( ): string
-		color_light( ): string
 	}
 	
 }
@@ -1393,42 +1370,36 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_view__sub__61Z5SJQJ = $mol_type_enforce<
+	type $mol_view__sub__9SL4G0NU = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $hype_ballsort_ball_view__ball__E6B42L4E = $mol_type_enforce<
+	type $hype_ballsort_ball_view__ball__641G79Z5 = $mol_type_enforce<
 		ReturnType< $hype_ballsort_tube_view['ball'] >
 		,
 		ReturnType< $hype_ballsort_ball_view['ball'] >
 	>
-	type $mol_list__style__RFHLY8F9 = $mol_type_enforce<
+	type $mol_list__style__EA5356EQ = $mol_type_enforce<
 		({ 
 			'min-height': string,
 		}) 
 		,
 		ReturnType< $mol_list['style'] >
 	>
-	type $mol_list__attr__4FO8CC44 = $mol_type_enforce<
+	type $mol_list__attr__OFQLPT7K = $mol_type_enforce<
 		({ 
 			'data-complete': ReturnType< $hype_ballsort_tube_view['complete'] >,
 		}) 
 		,
 		ReturnType< $mol_list['attr'] >
 	>
-	type $mol_list__rows__DTTK880H = $mol_type_enforce<
+	type $mol_list__rows__PWQCOSLJ = $mol_type_enforce<
 		ReturnType< $hype_ballsort_tube_view['balls'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
 	export class $hype_ballsort_tube_view extends $mol_list {
-		tube( ): $hype_ballsort_tube
-		active( ): boolean
-		event( ): ({ 
-			click( next?: ReturnType< $hype_ballsort_tube_view['click'] > ): ReturnType< $hype_ballsort_tube_view['click'] >,
-		}) 
-		rows( ): readonly(any)[]
 		click( next?: any ): any
 		roof( ): any
 		Roof( ): $mol_view
@@ -1437,6 +1408,12 @@ declare namespace $ {
 		Ball( id: any): $hype_ballsort_ball_view
 		balls( ): readonly(any)[]
 		Balls( ): $mol_list
+		tube( ): $hype_ballsort_tube
+		active( ): boolean
+		event( ): ({ 
+			click( next?: ReturnType< $hype_ballsort_tube_view['click'] > ): ReturnType< $hype_ballsort_tube_view['click'] >,
+		}) 
+		rows( ): readonly(any)[]
 	}
 	
 }
@@ -1455,6 +1432,29 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    function $mol_array_shuffle<Item>(array: readonly Item[]): Item[];
+}
+
+declare namespace $ {
+    class $hype_ballsort_game extends $mol_object {
+        color_count(): number;
+        tube_size(): number;
+        tube_empty_count(): number;
+        tube_count(): number;
+        ball_count(): number;
+        Ball(index: number): $hype_ballsort_ball;
+        balls(): $hype_ballsort_ball[];
+        Tube(index: number): $hype_ballsort_tube;
+        tubes(): $hype_ballsort_tube[];
+        moves(next?: number): number;
+        tube_active(next?: $hype_ballsort_tube | null): $hype_ballsort_tube | null;
+        ball_move(to: $hype_ballsort_tube): $hype_ballsort_tube | null | undefined;
+        tube_click(tube: $hype_ballsort_tube): void;
+        finished(): boolean;
+    }
+}
+
+declare namespace $ {
     class $mol_plugin extends $mol_view {
         dom_node_external(next?: Element): Element;
         render(): void;
@@ -1470,161 +1470,157 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__dom_name__W3O43CC8 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_view['dom_name'] >
-	>
-	type $mol_view__sub__W9CMLO3O = $mol_type_enforce<
+	type $mol_view__sub__EL1V6MOW = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__TU6EX8GR = $mol_type_enforce<
+	type $mol_view__sub__2I6I1YKJ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__A11BMOEA = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_button__title__FCT2UQ3A = $mol_type_enforce<
+	type $mol_button__title__LMVUI6M0 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button['title'] >
 	>
-	type $mol_button__click__4LO3DE1X = $mol_type_enforce<
+	type $mol_button__click__DY4GCOH7 = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['start'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_link__title__40VU1M3Q = $mol_type_enforce<
+	type $mol_link__title__PRPAICVP = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['title'] >
 	>
-	type $mol_link__uri__89YTYB7N = $mol_type_enforce<
+	type $mol_link__uri__5DGDYUQZ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_link__target__I33ANDKH = $mol_type_enforce<
+	type $mol_link__target__FRRLWAEQ = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['target'] >
 	>
-	type $mol_view__sub__JMK28EYY = $mol_type_enforce<
+	type $mol_view__sub__NS4F7UYW = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_list__rows__KWF6CZI4 = $mol_type_enforce<
+	type $mol_list__rows__TN7EDGO6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_button__title__LO1QBLWJ = $mol_type_enforce<
+	type $mol_button__title__9HUNJDB2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button['title'] >
 	>
-	type $mol_button__click__YSBXRI1E = $mol_type_enforce<
+	type $mol_button__click__JY40I85L = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['home'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_button__title__NWW7R07I = $mol_type_enforce<
+	type $mol_button__title__V0B85QOB = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button['title'] >
 	>
-	type $mol_button__click__27O9IYFE = $mol_type_enforce<
+	type $mol_button__click__XHWA8R3G = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['start'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_view__sub__NZ4B9BR4 = $mol_type_enforce<
+	type $mol_view__sub__WXW4MEBP = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__YJK0EJ8N = $mol_type_enforce<
+	type $mol_view__sub__OIVZ2PZ1 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $hype_ballsort_tube_view__tube__Q6K4CETS = $mol_type_enforce<
+	type $hype_ballsort_tube_view__tube__DVCHJFBA = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['tube'] >
 		,
 		ReturnType< $hype_ballsort_tube_view['tube'] >
 	>
-	type $hype_ballsort_tube_view__click__OFII6QST = $mol_type_enforce<
+	type $hype_ballsort_tube_view__click__GZCKKF04 = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['tube_click'] >
 		,
 		ReturnType< $hype_ballsort_tube_view['click'] >
 	>
-	type $hype_ballsort_tube_view__active__2GTF14M5 = $mol_type_enforce<
+	type $hype_ballsort_tube_view__active__EDPNNHF5 = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['tube_active'] >
 		,
 		ReturnType< $hype_ballsort_tube_view['active'] >
 	>
-	type $mol_view__sub__99ALS8QK = $mol_type_enforce<
+	type $mol_view__sub__DU1EP1CG = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['tubes'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_list__rows__F3AXLWQJ = $mol_type_enforce<
+	type $mol_list__rows__UTZM2S86 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_view__dom_name__PHCHFPUP = $mol_type_enforce<
+	type $mol_view__dom_name__MFJ00LDA = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub__TPO4DL2X = $mol_type_enforce<
+	type $mol_view__sub__X32X69UN = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__dom_name__YLQPUKZN = $mol_type_enforce<
+	type $mol_view__dom_name__QWI4G4LA = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub__53UZJZOQ = $mol_type_enforce<
+	type $mol_view__sub__NT7J7DQW = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button__title__J3HULKBY = $mol_type_enforce<
+	type $mol_button__title__7U2VR0X1 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button['title'] >
 	>
-	type $mol_button__click__T9DXGESP = $mol_type_enforce<
+	type $mol_button__click__VU82D5P2 = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['start'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_list__rows__Z8J9ZMOZ = $mol_type_enforce<
+	type $mol_list__rows__ALWYS464 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_list__rows__9UT8X9U2 = $mol_type_enforce<
+	type $mol_list__rows__4AHIYLT5 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
+	>
+	type $mol_view__dom_name__GTCBH0O0 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_view['dom_name'] >
+	>
+	type $mol_view__sub__BN3GG8XG = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
 	>
 	export class $hype_ballsort_app extends $mol_view {
-		game( ): $hype_ballsort_game
-		title( ): string
-		Title( ): $mol_view
-		sub( ): readonly(any)[]
 		Title_begin( ): $mol_view
 		Title_end( ): $mol_view
 		start( next?: any ): any
@@ -1650,6 +1646,10 @@ declare namespace $ {
 		Finish_home( ): $mol_button
 		Finish( ): $mol_list
 		Finish_page( ): $mol_list
+		game( ): $hype_ballsort_game
+		title( ): string
+		Title( ): $mol_view
+		sub( ): readonly(any)[]
 	}
 	
 }

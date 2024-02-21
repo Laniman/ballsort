@@ -3074,184 +3074,13 @@ var $;
 })($ || ($ = {}));
 
 ;
-"use strict";
-var $;
-(function ($) {
-    class $hype_ballsort_ball extends $mol_object {
-        color(next) {
-            return next ?? 0;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $hype_ballsort_ball.prototype, "color", null);
-    $.$hype_ballsort_ball = $hype_ballsort_ball;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_action = $mol_wire_method;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $hype_ballsort_tube extends $mol_object {
-        size() {
-            return 0;
-        }
-        complete() {
-            const [ball, ...balls] = this.balls();
-            return this.balls().length === this.size() && balls.every(obj => obj.color() === ball.color());
-        }
-        take() {
-            const next = this.balls().slice();
-            const ball = next.pop();
-            this.balls([...next]);
-            return ball;
-        }
-        put(obj) {
-            this.balls([...this.balls(), obj]);
-        }
-        balls(next) {
-            return next ?? [];
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $hype_ballsort_tube.prototype, "complete", null);
-    __decorate([
-        $mol_action
-    ], $hype_ballsort_tube.prototype, "take", null);
-    __decorate([
-        $mol_action
-    ], $hype_ballsort_tube.prototype, "put", null);
-    __decorate([
-        $mol_mem
-    ], $hype_ballsort_tube.prototype, "balls", null);
-    $.$hype_ballsort_tube = $hype_ballsort_tube;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_array_shuffle(array) {
-        const res = array.slice();
-        for (let index = res.length - 1; index > 0; index--) {
-            const index_swap = Math.floor(Math.random() * (index + 1));
-            const temp = res[index];
-            res[index] = res[index_swap];
-            res[index_swap] = temp;
-        }
-        return res;
-    }
-    $.$mol_array_shuffle = $mol_array_shuffle;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $hype_ballsort_game extends $mol_object {
-        color_count() { return 4; }
-        tube_size() { return 4; }
-        tube_empty_count() { return 2; }
-        tube_count() { return this.color_count() + this.tube_empty_count(); }
-        ball_count() { return this.tube_size() * this.color_count(); }
-        Ball(index) {
-            return new $hype_ballsort_ball;
-        }
-        balls() {
-            return Array.from({ length: this.ball_count() }, (_, index) => {
-                const obj = this.Ball(index);
-                obj.color(index % this.tube_size());
-                return obj;
-            });
-        }
-        Tube(index) {
-            const obj = new $hype_ballsort_tube;
-            obj.size = () => this.tube_size();
-            return obj;
-        }
-        tubes() {
-            const balls = $mol_array_shuffle(this.balls());
-            const size = this.tube_size();
-            return Array.from({ length: this.tube_count() }, (_, index) => {
-                const obj = this.Tube(index);
-                const list = index < this.color_count() ? balls.slice(index * size, index * size + size) : [];
-                obj.balls(list);
-                return obj;
-            });
-        }
-        moves(next) {
-            return next ?? 0;
-        }
-        tube_active(next) {
-            if (next?.balls().length === 0)
-                return null;
-            if (next?.complete())
-                return null;
-            return next ?? null;
-        }
-        ball_move(to) {
-            const from = this.tube_active();
-            if (to === from || !from) {
-                return this.tube_active(null);
-            }
-            const from_color = from?.balls().at(-1)?.color();
-            const to_color = to.balls().at(-1)?.color();
-            if (to.balls().length && from_color !== to_color) {
-                return;
-            }
-            const ball = from.take();
-            to.put(ball);
-            this.moves(this.moves() + 1);
-            this.tube_active(null);
-        }
-        tube_click(tube) {
-            const tube_active = this.tube_active();
-            tube_active === null ? this.tube_active(tube) : this.ball_move(tube);
-        }
-        finished() {
-            return this.tubes().every(tube => tube.complete() || tube.balls().length === 0);
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $hype_ballsort_game.prototype, "Ball", null);
-    __decorate([
-        $mol_mem
-    ], $hype_ballsort_game.prototype, "balls", null);
-    __decorate([
-        $mol_mem_key
-    ], $hype_ballsort_game.prototype, "Tube", null);
-    __decorate([
-        $mol_mem
-    ], $hype_ballsort_game.prototype, "tubes", null);
-    __decorate([
-        $mol_mem
-    ], $hype_ballsort_game.prototype, "moves", null);
-    __decorate([
-        $mol_mem
-    ], $hype_ballsort_game.prototype, "tube_active", null);
-    __decorate([
-        $mol_action
-    ], $hype_ballsort_game.prototype, "ball_move", null);
-    __decorate([
-        $mol_action
-    ], $hype_ballsort_game.prototype, "tube_click", null);
-    __decorate([
-        $mol_mem
-    ], $hype_ballsort_game.prototype, "finished", null);
-    $.$hype_ballsort_game = $hype_ballsort_game;
-})($ || ($ = {}));
-
-;
 	($.$mol_speck) = class $mol_speck extends ($.$mol_view) {
+		theme(){
+			return "$mol_theme_accent";
+		}
+		value(){
+			return null;
+		}
 		attr(){
 			return {...(super.attr()), "mol_theme": (this.theme())};
 		}
@@ -3260,12 +3089,6 @@ var $;
 		}
 		sub(){
 			return [(this.value())];
-		}
-		theme(){
-			return "$mol_theme_accent";
-		}
-		value(){
-			return null;
 		}
 	};
 
@@ -3302,6 +3125,33 @@ var $;
 
 ;
 	($.$mol_button) = class $mol_button extends ($.$mol_view) {
+		event_activate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		clicks(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_key_press(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		disabled(){
+			return false;
+		}
+		tab_index(){
+			return 0;
+		}
+		hint(){
+			return "";
+		}
+		hint_safe(){
+			return (this.hint());
+		}
+		error(){
+			return "";
+		}
 		enabled(){
 			return true;
 		}
@@ -3338,40 +3188,13 @@ var $;
 			(obj.value) = () => ((this.error()));
 			return obj;
 		}
-		event_activate(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		clicks(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_key_press(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		disabled(){
-			return false;
-		}
-		tab_index(){
-			return 0;
-		}
-		hint(){
-			return "";
-		}
-		hint_safe(){
-			return (this.hint());
-		}
-		error(){
-			return "";
-		}
 	};
-	($mol_mem(($.$mol_button.prototype), "click"));
-	($mol_mem(($.$mol_button.prototype), "event_click"));
-	($mol_mem(($.$mol_button.prototype), "Speck"));
 	($mol_mem(($.$mol_button.prototype), "event_activate"));
 	($mol_mem(($.$mol_button.prototype), "clicks"));
 	($mol_mem(($.$mol_button.prototype), "event_key_press"));
+	($mol_mem(($.$mol_button.prototype), "click"));
+	($mol_mem(($.$mol_button.prototype), "event_click"));
+	($mol_mem(($.$mol_button.prototype), "Speck"));
 
 
 ;
@@ -3564,6 +3387,34 @@ var $;
 
 ;
 	($.$mol_link) = class $mol_link extends ($.$mol_view) {
+		uri_toggle(){
+			return "";
+		}
+		hint(){
+			return "";
+		}
+		hint_safe(){
+			return (this.hint());
+		}
+		target(){
+			return "_self";
+		}
+		file_name(){
+			return "";
+		}
+		current(){
+			return false;
+		}
+		relation(){
+			return "";
+		}
+		event_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		click(next){
+			return (this.event_click(next));
+		}
 		uri(){
 			return "";
 		}
@@ -3599,40 +3450,19 @@ var $;
 		event(){
 			return {...(super.event()), "click": (next) => (this.click(next))};
 		}
-		uri_toggle(){
-			return "";
-		}
-		hint(){
-			return "";
-		}
-		hint_safe(){
-			return (this.hint());
-		}
-		target(){
-			return "_self";
-		}
-		file_name(){
-			return "";
-		}
-		current(){
-			return false;
-		}
-		relation(){
-			return "";
-		}
-		event_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		click(next){
-			return (this.event_click(next));
-		}
 	};
 	($mol_mem(($.$mol_link.prototype), "event_click"));
 
 
 ;
 "use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_action = $mol_wire_method;
+})($ || ($ = {}));
 
 ;
 "use strict";
@@ -3975,6 +3805,15 @@ var $;
 
 ;
 	($.$mol_list) = class $mol_list extends ($.$mol_view) {
+		rows(){
+			return [];
+		}
+		gap_before(){
+			return 0;
+		}
+		gap_after(){
+			return 0;
+		}
 		render_visible_only(){
 			return true;
 		}
@@ -4000,15 +3839,6 @@ var $;
 		}
 		view_window(){
 			return [0, 0];
-		}
-		rows(){
-			return [];
-		}
-		gap_before(){
-			return 0;
-		}
-		gap_after(){
-			return 0;
 		}
 	};
 	($mol_mem(($.$mol_list.prototype), "Empty"));
@@ -4236,7 +4066,68 @@ var $;
 })($ || ($ = {}));
 
 ;
+"use strict";
+var $;
+(function ($) {
+    class $hype_ballsort_ball extends $mol_object {
+        color(next) {
+            return next ?? 0;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_ball.prototype, "color", null);
+    $.$hype_ballsort_ball = $hype_ballsort_ball;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $hype_ballsort_tube extends $mol_object {
+        size() {
+            return 0;
+        }
+        complete() {
+            const [ball, ...balls] = this.balls();
+            return this.balls().length === this.size() && balls.every(obj => obj.color() === ball.color());
+        }
+        take() {
+            const next = this.balls().slice();
+            const ball = next.pop();
+            this.balls([...next]);
+            return ball;
+        }
+        put(obj) {
+            this.balls([...this.balls(), obj]);
+        }
+        balls(next) {
+            return next ?? [];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_tube.prototype, "complete", null);
+    __decorate([
+        $mol_action
+    ], $hype_ballsort_tube.prototype, "take", null);
+    __decorate([
+        $mol_action
+    ], $hype_ballsort_tube.prototype, "put", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_tube.prototype, "balls", null);
+    $.$hype_ballsort_tube = $hype_ballsort_tube;
+})($ || ($ = {}));
+
+;
 	($.$hype_ballsort_ball_view) = class $hype_ballsort_ball_view extends ($.$mol_view) {
+		color_main(){
+			return "";
+		}
+		color_light(){
+			return "";
+		}
 		ball(){
 			const obj = new this.$.$hype_ballsort_ball();
 			return obj;
@@ -4271,12 +4162,6 @@ var $;
 				"#343434", 
 				"#B1B1B1"
 			];
-		}
-		color_main(){
-			return "";
-		}
-		color_light(){
-			return "";
 		}
 	};
 	($mol_mem(($.$hype_ballsort_ball_view.prototype), "ball"));
@@ -4331,19 +4216,6 @@ var $;
 
 ;
 	($.$hype_ballsort_tube_view) = class $hype_ballsort_tube_view extends ($.$mol_list) {
-		tube(){
-			const obj = new this.$.$hype_ballsort_tube();
-			return obj;
-		}
-		active(){
-			return false;
-		}
-		event(){
-			return {"click": (next) => (this.click(next))};
-		}
-		rows(){
-			return [(this.Roof()), (this.Balls())];
-		}
 		click(next){
 			if(next !== undefined) return next;
 			return null;
@@ -4378,13 +4250,26 @@ var $;
 			(obj.rows) = () => ((this.balls()));
 			return obj;
 		}
+		tube(){
+			const obj = new this.$.$hype_ballsort_tube();
+			return obj;
+		}
+		active(){
+			return false;
+		}
+		event(){
+			return {"click": (next) => (this.click(next))};
+		}
+		rows(){
+			return [(this.Roof()), (this.Balls())];
+		}
 	};
-	($mol_mem(($.$hype_ballsort_tube_view.prototype), "tube"));
 	($mol_mem(($.$hype_ballsort_tube_view.prototype), "click"));
 	($mol_mem(($.$hype_ballsort_tube_view.prototype), "Roof"));
 	($mol_mem_key(($.$hype_ballsort_tube_view.prototype), "ball"));
 	($mol_mem_key(($.$hype_ballsort_tube_view.prototype), "Ball"));
 	($mol_mem(($.$hype_ballsort_tube_view.prototype), "Balls"));
+	($mol_mem(($.$hype_ballsort_tube_view.prototype), "tube"));
 
 
 ;
@@ -4477,6 +4362,121 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_array_shuffle(array) {
+        const res = array.slice();
+        for (let index = res.length - 1; index > 0; index--) {
+            const index_swap = Math.floor(Math.random() * (index + 1));
+            const temp = res[index];
+            res[index] = res[index_swap];
+            res[index_swap] = temp;
+        }
+        return res;
+    }
+    $.$mol_array_shuffle = $mol_array_shuffle;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $hype_ballsort_game extends $mol_object {
+        color_count() { return 4; }
+        tube_size() { return 4; }
+        tube_empty_count() { return 2; }
+        tube_count() { return this.color_count() + this.tube_empty_count(); }
+        ball_count() { return this.tube_size() * this.color_count(); }
+        Ball(index) {
+            return new $hype_ballsort_ball;
+        }
+        balls() {
+            return Array.from({ length: this.ball_count() }, (_, index) => {
+                const obj = this.Ball(index);
+                obj.color(index % this.tube_size());
+                return obj;
+            });
+        }
+        Tube(index) {
+            const obj = new $hype_ballsort_tube;
+            obj.size = () => this.tube_size();
+            return obj;
+        }
+        tubes() {
+            const balls = $mol_array_shuffle(this.balls());
+            const size = this.tube_size();
+            return Array.from({ length: this.tube_count() }, (_, index) => {
+                const obj = this.Tube(index);
+                const list = index < this.color_count() ? balls.slice(index * size, index * size + size) : [];
+                obj.balls(list);
+                return obj;
+            });
+        }
+        moves(next) {
+            return next ?? 0;
+        }
+        tube_active(next) {
+            if (next?.balls().length === 0)
+                return null;
+            if (next?.complete())
+                return null;
+            return next ?? null;
+        }
+        ball_move(to) {
+            const from = this.tube_active();
+            if (to === from || !from) {
+                return this.tube_active(null);
+            }
+            const from_color = from?.balls().at(-1)?.color();
+            const to_color = to.balls().at(-1)?.color();
+            if (to.balls().length && from_color !== to_color) {
+                return;
+            }
+            const ball = from.take();
+            to.put(ball);
+            this.moves(this.moves() + 1);
+            this.tube_active(null);
+        }
+        tube_click(tube) {
+            const tube_active = this.tube_active();
+            tube_active === null ? this.tube_active(tube) : this.ball_move(tube);
+        }
+        finished() {
+            return this.tubes().every(tube => tube.complete() || tube.balls().length === 0);
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $hype_ballsort_game.prototype, "Ball", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_game.prototype, "balls", null);
+    __decorate([
+        $mol_mem_key
+    ], $hype_ballsort_game.prototype, "Tube", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_game.prototype, "tubes", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_game.prototype, "moves", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_game.prototype, "tube_active", null);
+    __decorate([
+        $mol_action
+    ], $hype_ballsort_game.prototype, "ball_move", null);
+    __decorate([
+        $mol_action
+    ], $hype_ballsort_game.prototype, "tube_click", null);
+    __decorate([
+        $mol_mem
+    ], $hype_ballsort_game.prototype, "finished", null);
+    $.$hype_ballsort_game = $hype_ballsort_game;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_plugin extends $mol_view {
         dom_node_external(next) {
             return next ?? $mol_owning_get(this).host.dom_node();
@@ -4490,26 +4490,6 @@ var $;
 
 ;
 	($.$hype_ballsort_app) = class $hype_ballsort_app extends ($.$mol_view) {
-		game(){
-			const obj = new this.$.$hype_ballsort_game();
-			return obj;
-		}
-		title(){
-			return "BALL SORT";
-		}
-		Title(){
-			const obj = new this.$.$mol_view();
-			(obj.dom_name) = () => ("h2");
-			(obj.sub) = () => ([(this.Title_begin()), (this.Title_end())]);
-			return obj;
-		}
-		sub(){
-			return [
-				(this.Start_page()), 
-				(this.Game_page()), 
-				(this.Finish_page())
-			];
-		}
 		Title_begin(){
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => (["BALL"]);
@@ -4656,9 +4636,27 @@ var $;
 			]);
 			return obj;
 		}
+		game(){
+			const obj = new this.$.$hype_ballsort_game();
+			return obj;
+		}
+		title(){
+			return "BALL SORT";
+		}
+		Title(){
+			const obj = new this.$.$mol_view();
+			(obj.dom_name) = () => ("h2");
+			(obj.sub) = () => ([(this.Title_begin()), (this.Title_end())]);
+			return obj;
+		}
+		sub(){
+			return [
+				(this.Start_page()), 
+				(this.Game_page()), 
+				(this.Finish_page())
+			];
+		}
 	};
-	($mol_mem(($.$hype_ballsort_app.prototype), "game"));
-	($mol_mem(($.$hype_ballsort_app.prototype), "Title"));
 	($mol_mem(($.$hype_ballsort_app.prototype), "Title_begin"));
 	($mol_mem(($.$hype_ballsort_app.prototype), "Title_end"));
 	($mol_mem(($.$hype_ballsort_app.prototype), "start"));
@@ -4681,6 +4679,8 @@ var $;
 	($mol_mem(($.$hype_ballsort_app.prototype), "Finish_home"));
 	($mol_mem(($.$hype_ballsort_app.prototype), "Finish"));
 	($mol_mem(($.$hype_ballsort_app.prototype), "Finish_page"));
+	($mol_mem(($.$hype_ballsort_app.prototype), "game"));
+	($mol_mem(($.$hype_ballsort_app.prototype), "Title"));
 
 
 ;
@@ -7399,81 +7399,6 @@ var $;
 
 ;
 "use strict";
-var $;
-(function ($_1) {
-    var $$;
-    (function ($$) {
-        $mol_test({
-            "Moves initially zero"($) {
-                const obj = new $hype_ballsort_game;
-                $mol_assert_equal(obj.moves(), 0);
-            },
-            "tube completing"($) {
-                const game = new $hype_ballsort_game;
-                const tube = game.tubes().find(obj => obj.balls().length > 0);
-                $mol_assert_not(tube.complete());
-                tube.balls().forEach(ball => ball.color(0));
-                $mol_assert_ok(tube.complete());
-            },
-            "completed tube non activation"($) {
-                const game = new $hype_ballsort_game;
-                const tube = game.tubes().find(obj => obj.balls().length > 0);
-                $mol_assert_not(game.tube_active());
-                tube.balls().map(obj => obj.color(0));
-                game.tube_click(tube);
-                $mol_assert_not(game.tube_active());
-            },
-            "empty tube not activation"($) {
-                const game = new $hype_ballsort_game;
-                const tube = game.tubes().find(obj => obj.balls().length === 0);
-                $mol_assert_not(game.tube_active());
-                game.tube_click(tube);
-                $mol_assert_not(game.tube_active());
-            },
-            'tube activation'() {
-                const game = new $hype_ballsort_game;
-                const tube_filled = game.tubes().find(obj => obj.balls().length > 0);
-                const tube_empty = game.tubes().find(obj => obj.balls().length === 0);
-                $mol_assert_not(game.tube_active());
-                game.tube_click(tube_filled);
-                $mol_assert_equal(tube_filled, game.tube_active());
-                game.tube_click(tube_empty);
-                $mol_assert_not(game.tube_active());
-                game.tube_click(tube_empty);
-                $mol_assert_equal(tube_empty, game.tube_active());
-            },
-            'ball moving'() {
-                const game = new $hype_ballsort_game;
-                const tube_filled = game.tubes().find(obj => obj.balls().length > 0);
-                const tube_empty = game.tubes().find(obj => obj.balls().length === 0);
-                const ball_moving = tube_filled.balls().at(-1);
-                game.tube_click(tube_filled);
-                game.tube_click(tube_empty);
-                $mol_assert_equal(tube_filled.balls().length, game.tube_size() - 1);
-                $mol_assert_not(tube_filled.balls().includes(ball_moving));
-                $mol_assert_equal(tube_empty.balls().length, 1);
-                $mol_assert_ok(tube_empty.balls().includes(ball_moving));
-            },
-            'moves increment'() {
-                const game = new $hype_ballsort_game;
-                const tube_filled = game.tubes().find(obj => obj.balls().length > 0);
-                const tube_empty = game.tubes().find(obj => obj.balls().length === 0);
-                game.tube_click(tube_filled);
-                game.tube_click(tube_empty);
-                $mol_assert_equal(game.moves(), 1);
-            },
-            'game finish'() {
-                const game = new $hype_ballsort_game;
-                $mol_assert_not(game.finished());
-                game.balls().forEach(ball => ball.color(0));
-                $mol_assert_ok(game.finished());
-            },
-        });
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -7763,6 +7688,81 @@ var $;
             $mol_assert_equal(sheet, '[mol_style_sheet_test2] > :where([mol_style_sheet_test1]) {\n\tcolor: red;\n\tdisplay: block;\n}\n');
         },
     });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            "Moves initially zero"($) {
+                const obj = new $hype_ballsort_game;
+                $mol_assert_equal(obj.moves(), 0);
+            },
+            "tube completing"($) {
+                const game = new $hype_ballsort_game;
+                const tube = game.tubes().find(obj => obj.balls().length > 0);
+                $mol_assert_not(tube.complete());
+                tube.balls().forEach(ball => ball.color(0));
+                $mol_assert_ok(tube.complete());
+            },
+            "completed tube non activation"($) {
+                const game = new $hype_ballsort_game;
+                const tube = game.tubes().find(obj => obj.balls().length > 0);
+                $mol_assert_not(game.tube_active());
+                tube.balls().map(obj => obj.color(0));
+                game.tube_click(tube);
+                $mol_assert_not(game.tube_active());
+            },
+            "empty tube not activation"($) {
+                const game = new $hype_ballsort_game;
+                const tube = game.tubes().find(obj => obj.balls().length === 0);
+                $mol_assert_not(game.tube_active());
+                game.tube_click(tube);
+                $mol_assert_not(game.tube_active());
+            },
+            'tube activation'() {
+                const game = new $hype_ballsort_game;
+                const tube_filled = game.tubes().find(obj => obj.balls().length > 0);
+                const tube_empty = game.tubes().find(obj => obj.balls().length === 0);
+                $mol_assert_not(game.tube_active());
+                game.tube_click(tube_filled);
+                $mol_assert_equal(tube_filled, game.tube_active());
+                game.tube_click(tube_empty);
+                $mol_assert_not(game.tube_active());
+                game.tube_click(tube_empty);
+                $mol_assert_equal(tube_empty, game.tube_active());
+            },
+            'ball moving'() {
+                const game = new $hype_ballsort_game;
+                const tube_filled = game.tubes().find(obj => obj.balls().length > 0);
+                const tube_empty = game.tubes().find(obj => obj.balls().length === 0);
+                const ball_moving = tube_filled.balls().at(-1);
+                game.tube_click(tube_filled);
+                game.tube_click(tube_empty);
+                $mol_assert_equal(tube_filled.balls().length, game.tube_size() - 1);
+                $mol_assert_not(tube_filled.balls().includes(ball_moving));
+                $mol_assert_equal(tube_empty.balls().length, 1);
+                $mol_assert_ok(tube_empty.balls().includes(ball_moving));
+            },
+            'moves increment'() {
+                const game = new $hype_ballsort_game;
+                const tube_filled = game.tubes().find(obj => obj.balls().length > 0);
+                const tube_empty = game.tubes().find(obj => obj.balls().length === 0);
+                game.tube_click(tube_filled);
+                game.tube_click(tube_empty);
+                $mol_assert_equal(game.moves(), 1);
+            },
+            'game finish'() {
+                const game = new $hype_ballsort_game;
+                $mol_assert_not(game.finished());
+                game.balls().forEach(ball => ball.color(0));
+                $mol_assert_ok(game.finished());
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
 
 ;
