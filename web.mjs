@@ -2566,13 +2566,13 @@ var $;
 			return null;
 		}
 		attr(){
-			return {...(super.attr()), "mol_theme": (this.theme())};
+			return {...(super.attr()), "mol_theme": (this?.theme())};
 		}
 		style(){
 			return {...(super.style()), "minHeight": "1em"};
 		}
 		sub(){
-			return [(this.value())];
+			return [(this?.value())];
 		}
 	};
 
@@ -2631,7 +2631,7 @@ var $;
 			return "";
 		}
 		hint_safe(){
-			return (this.hint());
+			return (this?.hint());
 		}
 		error(){
 			return "";
@@ -2650,26 +2650,26 @@ var $;
 		event(){
 			return {
 				...(super.event()), 
-				"click": (next) => (this.event_activate(next)), 
-				"dblclick": (next) => (this.clicks(next)), 
-				"keydown": (next) => (this.event_key_press(next))
+				"click": (next) => (this?.event_activate(next)), 
+				"dblclick": (next) => (this?.clicks(next)), 
+				"keydown": (next) => (this?.event_key_press(next))
 			};
 		}
 		attr(){
 			return {
 				...(super.attr()), 
-				"disabled": (this.disabled()), 
+				"disabled": (this?.disabled()), 
 				"role": "button", 
-				"tabindex": (this.tab_index()), 
-				"title": (this.hint_safe())
+				"tabindex": (this?.tab_index()), 
+				"title": (this?.hint_safe())
 			};
 		}
 		sub(){
-			return [(this.title())];
+			return [(this?.title())];
 		}
 		Speck(){
 			const obj = new this.$.$mol_speck();
-			(obj.value) = () => ((this.error()));
+			(obj.value) = () => ((this?.error()));
 			return obj;
 		}
 	};
@@ -2878,7 +2878,7 @@ var $;
 			return "";
 		}
 		hint_safe(){
-			return (this.hint());
+			return (this?.hint());
 		}
 		target(){
 			return "_self";
@@ -2897,7 +2897,7 @@ var $;
 			return null;
 		}
 		click(next){
-			return (this.event_click(next));
+			return (this?.event_click(next));
 		}
 		uri(){
 			return "";
@@ -2917,22 +2917,22 @@ var $;
 		attr(){
 			return {
 				...(super.attr()), 
-				"href": (this.uri_toggle()), 
-				"title": (this.hint_safe()), 
-				"target": (this.target()), 
-				"download": (this.file_name()), 
-				"mol_link_current": (this.current()), 
-				"rel": (this.relation())
+				"href": (this?.uri_toggle()), 
+				"title": (this?.hint_safe()), 
+				"target": (this?.target()), 
+				"download": (this?.file_name()), 
+				"mol_link_current": (this?.current()), 
+				"rel": (this?.relation())
 			};
 		}
 		sub(){
-			return [(this.title())];
+			return [(this?.title())];
 		}
 		arg(){
 			return {};
 		}
 		event(){
-			return {...(super.event()), "click": (next) => (this.click(next))};
+			return {...(super.event()), "click": (next) => (this?.click(next))};
 		}
 	};
 	($mol_mem(($.$mol_link.prototype), "event_click"));
@@ -3343,7 +3343,7 @@ var $;
 			return 0;
 		}
 		sub(){
-			return (this.rows());
+			return (this?.rows());
 		}
 		Empty(){
 			const obj = new this.$.$mol_view();
@@ -3351,12 +3351,12 @@ var $;
 		}
 		Gap_before(){
 			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"paddingTop": (this.gap_before())});
+			(obj.style) = () => ({"paddingTop": (this?.gap_before())});
 			return obj;
 		}
 		Gap_after(){
 			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"paddingTop": (this.gap_after())});
+			(obj.style) = () => ({"paddingTop": (this?.gap_after())});
 			return obj;
 		}
 		view_window(){
@@ -3654,7 +3654,7 @@ var $;
 			return obj;
 		}
 		style(){
-			return {"--main-color": (this.color_main()), "--light-color": (this.color_light())};
+			return {"--main-color": (this?.color_main()), "--light-color": (this?.color_light())};
 		}
 		colors(){
 			return [
@@ -3746,7 +3746,7 @@ var $;
 		}
 		Roof(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.roof())]);
+			(obj.sub) = () => ([(this?.roof())]);
 			return obj;
 		}
 		complete(){
@@ -3758,17 +3758,17 @@ var $;
 		}
 		Ball(id){
 			const obj = new this.$.$hype_ballsort_ball_view();
-			(obj.ball) = () => ((this.ball(id)));
+			(obj.ball) = () => ((this?.ball(id)));
 			return obj;
 		}
 		balls(){
-			return [(this.Ball("0"))];
+			return [(this?.Ball("0"))];
 		}
 		Balls(){
 			const obj = new this.$.$mol_list();
 			(obj.style) = () => ({"min-height": "10rem"});
-			(obj.attr) = () => ({"data-complete": (this.complete())});
-			(obj.rows) = () => ((this.balls()));
+			(obj.attr) = () => ({"data-complete": (this?.complete())});
+			(obj.rows) = () => ((this?.balls()));
 			return obj;
 		}
 		tube(){
@@ -3779,10 +3779,10 @@ var $;
 			return false;
 		}
 		event(){
-			return {"click": (next) => (this.click(next))};
+			return {"click": (next) => (this?.click(next))};
 		}
 		rows(){
-			return [(this.Roof()), (this.Balls())];
+			return [(this?.Roof()), (this?.Balls())];
 		}
 	};
 	($mol_mem(($.$hype_ballsort_tube_view.prototype), "click"));
@@ -4028,7 +4028,7 @@ var $;
 		Start(){
 			const obj = new this.$.$mol_button();
 			(obj.title) = () => ("Start game");
-			(obj.click) = (next) => ((this.start(next)));
+			(obj.click) = (next) => ((this?.start(next)));
 			return obj;
 		}
 		Sources(){
@@ -4040,15 +4040,15 @@ var $;
 		}
 		Links(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Sources())]);
+			(obj.sub) = () => ([(this?.Sources())]);
 			return obj;
 		}
 		Start_page(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this.Title()), 
-				(this.Start()), 
-				(this.Links())
+				(this?.Title()), 
+				(this?.Start()), 
+				(this?.Links())
 			]);
 			return obj;
 		}
@@ -4059,13 +4059,13 @@ var $;
 		Home(){
 			const obj = new this.$.$mol_button();
 			(obj.title) = () => ("←");
-			(obj.click) = (next) => ((this.home(next)));
+			(obj.click) = (next) => ((this?.home(next)));
 			return obj;
 		}
 		Restart(){
 			const obj = new this.$.$mol_button();
 			(obj.title) = () => ("Restart");
-			(obj.click) = (next) => ((this.start(next)));
+			(obj.click) = (next) => ((this?.start(next)));
 			return obj;
 		}
 		moves(){
@@ -4073,15 +4073,15 @@ var $;
 		}
 		Moves(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.moves())]);
+			(obj.sub) = () => ([(this?.moves())]);
 			return obj;
 		}
 		Control(){
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ([
-				(this.Home()), 
-				(this.Restart()), 
-				(this.Moves())
+				(this?.Home()), 
+				(this?.Restart()), 
+				(this?.Moves())
 			]);
 			return obj;
 		}
@@ -4098,25 +4098,25 @@ var $;
 		}
 		Tube(id){
 			const obj = new this.$.$hype_ballsort_tube_view();
-			(obj.tube) = () => ((this.tube(id)));
-			(obj.click) = (next) => ((this.tube_click(id, next)));
-			(obj.active) = () => ((this.tube_active(id)));
+			(obj.tube) = () => ((this?.tube(id)));
+			(obj.click) = (next) => ((this?.tube_click(id, next)));
+			(obj.active) = () => ((this?.tube_active(id)));
 			return obj;
 		}
 		tubes(){
-			return [(this.Tube("0"))];
+			return [(this?.Tube("0"))];
 		}
 		Tubes(){
 			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ((this.tubes()));
+			(obj.sub) = () => ((this?.tubes()));
 			return obj;
 		}
 		Game_page(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this.Control()), 
-				(this.Tubes()), 
-				(this.Links())
+				(this?.Control()), 
+				(this?.Tubes()), 
+				(this?.Links())
 			]);
 			return obj;
 		}
@@ -4135,25 +4135,25 @@ var $;
 		Finish_home(){
 			const obj = new this.$.$mol_button();
 			(obj.title) = () => ("New game");
-			(obj.click) = (next) => ((this.start(next)));
+			(obj.click) = (next) => ((this?.start(next)));
 			return obj;
 		}
 		Finish(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this.Finish_title()), 
-				(this.Finish_moves()), 
-				(this.Finish_home())
+				(this?.Finish_title()), 
+				(this?.Finish_moves()), 
+				(this?.Finish_home())
 			]);
 			return obj;
 		}
 		Finish_page(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ([
-				(this.Control()), 
-				(this.Tubes()), 
-				(this.Links()), 
-				(this.Finish())
+				(this?.Control()), 
+				(this?.Tubes()), 
+				(this?.Links()), 
+				(this?.Finish())
 			]);
 			return obj;
 		}
@@ -4167,14 +4167,14 @@ var $;
 		Title(){
 			const obj = new this.$.$mol_view();
 			(obj.dom_name) = () => ("h2");
-			(obj.sub) = () => ([(this.Title_begin()), (this.Title_end())]);
+			(obj.sub) = () => ([(this?.Title_begin()), (this?.Title_end())]);
 			return obj;
 		}
 		sub(){
 			return [
-				(this.Start_page()), 
-				(this.Game_page()), 
-				(this.Finish_page())
+				(this?.Start_page()), 
+				(this?.Game_page()), 
+				(this?.Finish_page())
 			];
 		}
 	};
