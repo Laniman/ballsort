@@ -953,7 +953,7 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_speck__value__B5NZY5BI = $mol_type_enforce<
+	type $mol_speck__value__FTZGNOJE = $mol_type_enforce<
 		ReturnType< $mol_button['error'] >
 		,
 		ReturnType< $mol_speck['value'] >
@@ -1170,14 +1170,14 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__style__IRMOHBK7 = $mol_type_enforce<
+	type $mol_view__style__6O53R9RJ = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_before'] >,
 		}) 
 		,
 		ReturnType< $mol_view['style'] >
 	>
-	type $mol_view__style__D2839B6D = $mol_type_enforce<
+	type $mol_view__style__SWKBXQYZ = $mol_type_enforce<
 		({ 
 			'paddingTop': ReturnType< $mol_list['gap_after'] >,
 		}) 
@@ -1261,31 +1261,31 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $mol_view__sub__58ZIUEUI = $mol_type_enforce<
+	type $mol_view__sub__SWXVT6AV = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $hype_ballsort_ball_view__ball__71G4QBV8 = $mol_type_enforce<
+	type $hype_ballsort_ball_view__ball__PUBPFCIZ = $mol_type_enforce<
 		ReturnType< $hype_ballsort_tube_view['ball'] >
 		,
 		ReturnType< $hype_ballsort_ball_view['ball'] >
 	>
-	type $mol_list__style__4ZQX6M44 = $mol_type_enforce<
+	type $mol_list__style__K7CLZB15 = $mol_type_enforce<
 		({ 
 			'min-height': string,
 		}) 
 		,
 		ReturnType< $mol_list['style'] >
 	>
-	type $mol_list__attr__9D8UFCQP = $mol_type_enforce<
+	type $mol_list__attr__R5Q8624D = $mol_type_enforce<
 		({ 
 			'data-complete': ReturnType< $hype_ballsort_tube_view['complete'] >,
 		}) 
 		,
 		ReturnType< $mol_list['attr'] >
 	>
-	type $mol_list__rows__L1FLJWED = $mol_type_enforce<
+	type $mol_list__rows__JRNV7JOC = $mol_type_enforce<
 		ReturnType< $hype_ballsort_tube_view['balls'] >
 		,
 		ReturnType< $mol_list['rows'] >
@@ -1365,152 +1365,152 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_view__sub__07K3PEAL = $mol_type_enforce<
+	type $mol_view__sub__9OGQP8G7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__FDFJ5P41 = $mol_type_enforce<
+	type $mol_view__sub__AS3Q4E34 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button__title__Q2GQJPJF = $mol_type_enforce<
+	type $mol_button__title__1P6G8B4G = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button['title'] >
 	>
-	type $mol_button__click__JH781EE4 = $mol_type_enforce<
+	type $mol_button__click__RPQ6WST6 = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['start'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_link__title__8A864THX = $mol_type_enforce<
+	type $mol_link__title__ITM6R1D3 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['title'] >
 	>
-	type $mol_link__uri__053U7B8Q = $mol_type_enforce<
+	type $mol_link__uri__0TYEN2Z5 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_link__target__WFVOP2PO = $mol_type_enforce<
+	type $mol_link__target__2Z12YR40 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_link['target'] >
 	>
-	type $mol_view__sub__WZG0QD8E = $mol_type_enforce<
+	type $mol_view__sub__2HT8VRP2 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_list__rows__U42TSR8L = $mol_type_enforce<
+	type $mol_list__rows__SZ55CLN5 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_button__title__R35REZC5 = $mol_type_enforce<
+	type $mol_button__title__6PID0CFO = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button['title'] >
 	>
-	type $mol_button__click__FS1Y7YGL = $mol_type_enforce<
+	type $mol_button__click__7M6YYQP8 = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['home'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_button__title__JXW77Q7U = $mol_type_enforce<
+	type $mol_button__title__RQSJJB6H = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button['title'] >
 	>
-	type $mol_button__click__88VD3MPC = $mol_type_enforce<
+	type $mol_button__click__CF7GFG4B = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['start'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_view__sub__DUBQDT3D = $mol_type_enforce<
+	type $mol_view__sub__MD4DO5DR = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__ZRYVE25P = $mol_type_enforce<
+	type $mol_view__sub__PJKW2E4R = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $hype_ballsort_tube_view__tube__1HMLB1A5 = $mol_type_enforce<
+	type $hype_ballsort_tube_view__tube__HUUV5CSK = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['tube'] >
 		,
 		ReturnType< $hype_ballsort_tube_view['tube'] >
 	>
-	type $hype_ballsort_tube_view__click__EFL37H57 = $mol_type_enforce<
+	type $hype_ballsort_tube_view__click__6PWHKO8V = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['tube_click'] >
 		,
 		ReturnType< $hype_ballsort_tube_view['click'] >
 	>
-	type $hype_ballsort_tube_view__active__I6X8AZGM = $mol_type_enforce<
+	type $hype_ballsort_tube_view__active__MZ8A6AT8 = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['tube_active'] >
 		,
 		ReturnType< $hype_ballsort_tube_view['active'] >
 	>
-	type $mol_view__sub__CPGOMVKB = $mol_type_enforce<
+	type $mol_view__sub__GQ2DNHSD = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['tubes'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_list__rows__8AIV4YAO = $mol_type_enforce<
+	type $mol_list__rows__0SXH1T3I = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_view__dom_name__K4QFR2IC = $mol_type_enforce<
+	type $mol_view__dom_name__D9YYHYY0 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub__LRA2Z9RV = $mol_type_enforce<
+	type $mol_view__sub__LKUKP0FA = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__dom_name__UTCOJ703 = $mol_type_enforce<
+	type $mol_view__dom_name__CDOAKVGK = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub__033BYYSQ = $mol_type_enforce<
+	type $mol_view__sub__REYWA7YA = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button__title__119712QJ = $mol_type_enforce<
+	type $mol_button__title__H24RVFDK = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_button['title'] >
 	>
-	type $mol_button__click__X5BPI2PS = $mol_type_enforce<
+	type $mol_button__click__ATL9GVPH = $mol_type_enforce<
 		ReturnType< $hype_ballsort_app['start'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_list__rows__9SE7MYNT = $mol_type_enforce<
+	type $mol_list__rows__YHCP2JVN = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_list__rows__5MPRTJ8Y = $mol_type_enforce<
+	type $mol_list__rows__E59ADB9O = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_view__dom_name__WO5PBTYU = $mol_type_enforce<
+	type $mol_view__dom_name__ZABFQR94 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub__QPEP7S17 = $mol_type_enforce<
+	type $mol_view__sub__Y48F120J = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
