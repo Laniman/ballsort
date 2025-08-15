@@ -4123,9 +4123,12 @@ var $;
         },
         ':focus': {
             outline: 'none',
+        },
+        ':focus-visible': {
+            outline: 'none',
             background: {
                 color: $mol_theme.hover,
-            },
+            }
         },
         ':active': {
             color: $mol_theme.focus,
