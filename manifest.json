@@ -1,0 +1,10 @@
+{
+	"name": "hype_ballsort_app",
+	"short_name": "hype_ballsort_app",
+	"description": "",
+	"id": "hype_ballsort_app",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}
